@@ -15,5 +15,293 @@ body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system,"Segoe UI",R
 .container{max-width:700px;margin:0 auto; display:grid; gap:24px;}
 h1{font-size:clamp(22px,3vw,28px); margin:0 0 16px;}
 .subtitle{color:var(--muted); margin:0 0 20px; font-size:14px;}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius);
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);}
+.section-title{display:flex; align-items:center; gap:10px; font-weight:650; margin:6px 0 16px;}
+/* Badges (números) en azul */
+.section-title .badge {
+  font-size:12px;
+  color:#ffffff;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+  box-shadow:0 4px 16px rgba(59,130,246,.35);
 }
+form{display:grid; gap:18px;}
+.grid{display:grid; gap:14px; grid-template-columns: repeat(12,1fr);}
+.col-12{grid-column: span 12;}
+.col-6{grid-column: span 6;}
+.col-4{grid-column: span 4;}
+@media(max-width:720px){.col-6,.col-4{grid-column: span 12;}}
+label{display:block;font-size:12px;color:var(--muted); margin:0 0 8px;}
+input, select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(148,163,184,.2); background: rgba(2,6,23,.55); color:var(--text); outline:none; transition:.15s;}
+input::placeholder{color:#6b7280;}
+input:focus, select:focus{border-color: var(--accent-2); box-shadow:0 0 0 6px var(--ring);}
+input.error, select.error{border-color: var(--danger);}
+.row{display:flex; gap:12px; align-items:center;}
+/* Botón pagar ahora azul */
+.btn {
+  width:100%;
+  padding:14px 18px;
+  border-radius:12px;
+  border:0;
+  cursor:pointer;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  color:#ffffff;
+  font-weight:800;
+  text-transform:uppercase;
+  box-shadow:0 10px 28px rgba(59,130,246,.35), inset 0 -2px 0 rgba(0,0,0,.25);
+  transition:transform .06s ease-in-out, box-shadow .2s;
+}
+.btn:disabled{opacity:.5; cursor:not-allowed;}
+.btn:active{transform:translateY(1px); box-shadow:0 6px 18px rgba(59,130,246,.3);}
+.error-msg {
+  display: none;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.4);
+  color: #ef4444;
+}
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  display: none;
+  margin-left: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+/* Sello SSL */
+.ssl-seal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px;
+  border: 1px solid rgba(34,197,94,.4);
+  border-radius: 10px;
+  background: rgba(34,197,94,.1);
+  font-size: 13px;
+  color: #bbf7d0;
+}
+.ssl-seal i {font-size: 18px; color: #22c55e;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Finalizar compra</h1>
+  <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
+  <form id="checkoutForm" novalidate>
+
+    <!-- ENVÍO -->
+    <div class="card">
+      <div class="section-title"><span class="badge">1</span> Datos de envío</div>
+      <div class="grid">
+        <div class="col-6">
+          <label for="shipName">Nombre completo</label>
+          <input id="shipName" required placeholder="Tu nombre completo"/>
+        </div>
+        <div class="col-6">
+          <label for="shipEmail">Correo electrónico</label>
+          <input id="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
+        </div>
+        <div class="col-6">
+          <label for="shipPhone">Teléfono</label>
+          <input id="shipPhone" required placeholder="+52 55 1234 5678"/>
+        </div>
+        <div class="col-6">
+          <label for="shipPostal">Código postal</label>
+          <input id="shipPostal" required placeholder="00000"/>
+        </div>
+        <div class="col-6">
+          <label for="shipCity">Ciudad</label>
+          <input id="shipCity" required placeholder="Ciudad"/>
+        </div>
+        <div class="col-6">
+          <label for="shipState">Estado</label>
+          <select id="shipState" required>
+            <option value="">Selecciona tu estado</option>
+            <option value="AG">Aguascalientes</option>
+            <option value="BC">Baja California</option>
+            <option value="BS">Baja California Sur</option>
+            <option value="CH">Chihuahua</option>
+            <option value="CO">Coahuila</option>
+            <option value="CL">Colima</option>
+            <option value="CM">Campeche</option>
+            <option value="CS">Chiapas</option>
+            <option value="DF">Ciudad de México</option>
+            <option value="DG">Durango</option>
+            <option value="GT">Guanajuato</option>
+            <option value="GR">Guerrero</option>
+            <option value="HG">Hidalgo</option>
+            <option value="JA">Jalisco</option>
+            <option value="MX">México</option>
+            <option value="MI">Michoacán</option>
+            <option value="MO">Morelos</option>
+            <option value="NA">Nayarit</option>
+            <option value="NL">Nuevo León</option>
+            <option value="OA">Oaxaca</option>
+            <option value="PU">Puebla</option>
+            <option value="QE">Querétaro</option>
+            <option value="QR">Quintana Roo</option>
+            <option value="SL">San Luis Potosí</option>
+            <option value="SI">Sinaloa</option>
+            <option value="SO">Sonora</option>
+            <option value="TB">Tabasco</option>
+            <option value="TM">Tamaulipas</option>
+            <option value="TL">Tlaxcala</option>
+            <option value="VE">Veracruz</option>
+            <option value="YU">Yucatán</option>
+            <option value="ZA">Zacatecas</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label for="shipAddress">Dirección</label>
+          <input id="shipAddress" required placeholder="Dirección"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- FACTURACIÓN -->
+    <div class="card">
+      <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
+      <label><input type="checkbox" id="sameAsShipping" checked> Usar mismos datos de envío</label>
+      <div id="billingSection" style="display:none; margin-top:14px;">
+        <div class="grid">
+          <div class="col-6">
+            <label for="billName">Nombre completo</label>
+            <input id="billName" placeholder="Nombre para facturación"/>
+          </div>
+          <div class="col-6">
+            <label for="billRFC">RFC (opcional)</label>
+            <input id="billRFC" placeholder="ABC123456789"/>
+          </div>
+          <div class="col-12">
+            <label for="billAddress">Dirección</label>
+            <input id="billAddress" placeholder="Dirección"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGO -->
+    <div class="card">
+      <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
+      <div class="grid">
+        <div class="col-6">
+          <label for="cardName">Nombre en tarjeta</label>
+          <input id="cardName" required placeholder="Como aparece en la tarjeta"/>
+        </div>
+        <div class="col-6">
+          <label for="cardNumber">Número de tarjeta</label>
+          <input id="cardNumber" required placeholder="•••• •••• •••• ••••"/>
+        </div>
+        <div class="col-4">
+          <label for="cardExp">Vencimiento (MM/AA)</label>
+          <input id="cardExp" required placeholder="MM/AA"/>
+        </div>
+        <div class="col-4">
+          <label for="cardCvv">CVV</label>
+          <input id="cardCvv" required placeholder="CVV"/>
+        </div>
+        <div class="col-4">
+          <label for="cardType">Tipo de tarjeta</label>
+          <select id="cardType" required>
+            <option value="">Selecciona</option>
+            <option value="debito">Débito</option>
+            <option value="credito">Crédito</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTÓN -->
+    <div class="row">
+      <button class="btn" type="submit" id="payBtn">Pagar ahora</button>
+      <div class="spinner" id="spinner"></div>
+    </div>
+
+    <!-- Mensajes -->
+    <div class="error-msg" id="errorMsg">❌ El pago fue rechazado. Intenta con otra tarjeta o verifique que los datos ingresados sean correctos.</div>
+
+    <!-- Sello de seguridad con enlace -->
+    <a href="https://www.sslshopper.com/ssl-checker.html" target="_blank" style="text-decoration:none;">
+      <div class="ssl-seal">
+        <i>🔒</i> Pago seguro con encriptación SSL 256-bit
+      </div>
+    </a>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("checkoutForm");
+  const btn = document.getElementById("payBtn");
+  const spinner = document.getElementById("spinner");
+  const errorMsg = document.getElementById("errorMsg");
+  const sameAsShipping = document.getElementById("sameAsShipping");
+  const billingSection = document.getElementById("billingSection");
+
+  sameAsShipping.addEventListener("change", () => {
+    billingSection.style.display = sameAsShipping.checked ? "none" : "block";
+  });
+
+  function validLuhn(number) {
+    const arr = (number + '').replace(/\D/g,'').split('').reverse().map(x=>+x);
+    const sum = arr.reduce((acc, val, i) => acc + (i % 2 ? ((val * 2 > 9) ? val*2-9 : val*2) : val), 0);
+    return sum % 10 === 0;
+  }
+
+  function validateRFC(rfc) {
+    if (!rfc) return true;
+    const regex = /^([A-ZÑ&]{3,4})(\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[A-Z\d]{2}[A\d]$/;
+    return regex.test(rfc.toUpperCase());
+  }
+
+  function validateField(field) {
+    const value = field.value.trim();
+    let valid = true;
+    if (field.hasAttribute("required") && !value) valid = false;
+    if (field.id === "shipEmail" && value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) valid = false;
+    if (field.id === "shipPhone" && value && !/^[0-9+\s]{8,15}$/.test(value)) valid = false;
+    if (field.id === "shipPostal" && value && !/^\d{5}$/.test(value)) valid = false;
+    if (field.id === "cardNumber" && value && !validLuhn(value)) valid = false;
+    if (field.id === "cardExp" && value && !/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) valid = false;
+    if (field.id === "cardCvv" && value && !/^\d{3,4}$/.test(value)) valid = false;
+    if (field.id === "billRFC" && value && !validateRFC(value)) valid = false;
+    field.classList.toggle("error", !valid);
+    return valid;
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const fields = Array.from(document.querySelectorAll("input, select"));
+    let valid = true;
+    fields.forEach(f => {
+      if (f.closest("#billingSection") && sameAsShipping.checked) return;
+      if (!validateField(f)) valid = false;
+    });
+    if (!valid) return;
+
+    errorMsg.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Procesando...";
+    spinner.style.display = "inline-block";
+
+    setTimeout(() => {
+      spinner.style.display = "none";
+      btn.disabled = false;
+      btn.textContent = "Pagar ahora";
+      errorMsg.style.display = "block";
+    }, 2800);
+  });
+});
+</script>
+</body>
+</html>
