@@ -11,8 +11,8 @@
   --ring:rgba(59,130,246,.35); --radius:14px;
 }
 *{box-sizing:border-box;}
-body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system,"Segoe UI",Roboto,Arial; background:#0f172a; color:var(--text); padding:24px;}
-.container{max-width:700px;margin:0 auto; display:grid; gap:24px;}
+body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system,"Segoe UI",Roboto,Arial; background:var(--bg); color:var(--text);}
+.container{max-width:700px;margin:0 auto; display:grid; gap:24px; padding:24px;}
 h1{font-size:clamp(22px,3vw,28px); margin:0 0 16px;}
 .subtitle{color:var(--muted); margin:0 0 20px; font-size:14px;}
 .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);}
@@ -87,153 +87,165 @@ input.error, select.error{border-color: var(--danger);}
   color: #bbf7d0;
 }
 .ssl-seal i {font-size: 18px; color: #22c55e;}
+/* Banner superior */
+.header-banner {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--bg);
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Finalizar compra</h1>
-  <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
-  <form id="checkoutForm" novalidate>
 
-    <!-- ENVÍO -->
-    <div class="card">
-      <div class="section-title"><span class="badge">1</span> Datos de envío</div>
-      <div class="grid">
-        <div class="col-6">
-          <label for="shipName">Nombre completo</label>
-          <input id="shipName" name="shipName" required placeholder="Tu nombre completo"/>
-        </div>
-        <div class="col-6">
-          <label for="shipEmail">Correo electrónico</label>
-          <input id="shipEmail" name="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
-        </div>
-        <div class="col-6">
-          <label for="shipPhone">Teléfono</label>
-          <input id="shipPhone" name="shipPhone" required placeholder="+52 55 1234 5678"/>
-        </div>
-        <div class="col-6">
-          <label for="shipPostal">Código postal</label>
-          <input id="shipPostal" name="shipPostal" required placeholder="00000"/>
-        </div>
-        <div class="col-6">
-          <label for="shipCity">Ciudad</label>
-          <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
-        </div>
-        <div class="col-6">
-          <label for="shipState">Estado</label>
-          <select id="shipState" name="shipState" required>
-            <option value="">Selecciona tu estado</option>
-            <option value="AG">Aguascalientes</option>
-            <option value="BC">Baja California</option>
-            <option value="BS">Baja California Sur</option>
-            <option value="CH">Chihuahua</option>
-            <option value="CO">Coahuila</option>
-            <option value="CL">Colima</option>
-            <option value="CM">Campeche</option>
-            <option value="CS">Chiapas</option>
-            <option value="DF">Ciudad de México</option>
-            <option value="DG">Durango</option>
-            <option value="GT">Guanajuato</option>
-            <option value="GR">Guerrero</option>
-            <option value="HG">Hidalgo</option>
-            <option value="JA">Jalisco</option>
-            <option value="MX">México</option>
-            <option value="MI">Michoacán</option>
-            <option value="MO">Morelos</option>
-            <option value="NA">Nayarit</option>
-            <option value="NL">Nuevo León</option>
-            <option value="OA">Oaxaca</option>
-            <option value="PU">Puebla</option>
-            <option value="QE">Querétaro</option>
-            <option value="QR">Quintana Roo</option>
-            <option value="SL">San Luis Potosí</option>
-            <option value="SI">Sinaloa</option>
-            <option value="SO">Sonora</option>
-            <option value="TB">Tabasco</option>
-            <option value="TM">Tamaulipas</option>
-            <option value="TL">Tlaxcala</option>
-            <option value="VE">Veracruz</option>
-            <option value="YU">Yucatán</option>
-            <option value="ZA">Zacatecas</option>
-          </select>
-        </div>
-        <div class="col-12">
-          <label for="shipAddress">Dirección</label>
-          <input id="shipAddress" name="shipAddress" required placeholder="Dirección"/>
-        </div>
-      </div>
-    </div>
+  <!-- Banner superior -->
+  <div style="background: var(--bg);">
+    <img src="IMG_6369.jpeg" alt="Compra segura" class="header-banner">
+  </div>
 
-    <!-- FACTURACIÓN -->
-    <div class="card">
-      <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
-      <label><input type="checkbox" id="sameAsShipping" checked> Usar mismos datos de envío</label>
-      <div id="billingSection" style="display:none; margin-top:14px;">
+  <div class="container">
+    <h1>Finalizar compra</h1>
+    <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
+    <form id="checkoutForm" novalidate>
+      <!-- ENVÍO -->
+      <div class="card">
+        <div class="section-title"><span class="badge">1</span> Datos de envío</div>
         <div class="grid">
           <div class="col-6">
-            <label for="billName">Nombre completo</label>
-            <input id="billName" name="billName" placeholder="Nombre para facturación"/>
+            <label for="shipName">Nombre completo</label>
+            <input id="shipName" name="shipName" required placeholder="Tu nombre completo"/>
           </div>
           <div class="col-6">
-            <label for="billRFC">RFC (opcional)</label>
-            <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
+            <label for="shipEmail">Correo electrónico</label>
+            <input id="shipEmail" name="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
+          </div>
+          <div class="col-6">
+            <label for="shipPhone">Teléfono</label>
+            <input id="shipPhone" name="shipPhone" required placeholder="+52 55 1234 5678"/>
+          </div>
+          <div class="col-6">
+            <label for="shipPostal">Código postal</label>
+            <input id="shipPostal" name="shipPostal" required placeholder="00000"/>
+          </div>
+          <div class="col-6">
+            <label for="shipCity">Ciudad</label>
+            <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
+          </div>
+          <div class="col-6">
+            <label for="shipState">Estado</label>
+            <select id="shipState" name="shipState" required>
+              <option value="">Selecciona tu estado</option>
+              <option value="AG">Aguascalientes</option>
+              <option value="BC">Baja California</option>
+              <option value="BS">Baja California Sur</option>
+              <option value="CH">Chihuahua</option>
+              <option value="CO">Coahuila</option>
+              <option value="CL">Colima</option>
+              <option value="CM">Campeche</option>
+              <option value="CS">Chiapas</option>
+              <option value="DF">Ciudad de México</option>
+              <option value="DG">Durango</option>
+              <option value="GT">Guanajuato</option>
+              <option value="GR">Guerrero</option>
+              <option value="HG">Hidalgo</option>
+              <option value="JA">Jalisco</option>
+              <option value="MX">México</option>
+              <option value="MI">Michoacán</option>
+              <option value="MO">Morelos</option>
+              <option value="NA">Nayarit</option>
+              <option value="NL">Nuevo León</option>
+              <option value="OA">Oaxaca</option>
+              <option value="PU">Puebla</option>
+              <option value="QE">Querétaro</option>
+              <option value="QR">Quintana Roo</option>
+              <option value="SL">San Luis Potosí</option>
+              <option value="SI">Sinaloa</option>
+              <option value="SO">Sonora</option>
+              <option value="TB">Tabasco</option>
+              <option value="TM">Tamaulipas</option>
+              <option value="TL">Tlaxcala</option>
+              <option value="VE">Veracruz</option>
+              <option value="YU">Yucatán</option>
+              <option value="ZA">Zacatecas</option>
+            </select>
           </div>
           <div class="col-12">
-            <label for="billAddress">Dirección</label>
-            <input id="billAddress" name="billAddress" placeholder="Dirección"/>
+            <label for="shipAddress">Dirección</label>
+            <input id="shipAddress" name="shipAddress" required placeholder="Dirección"/>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- PAGO -->
-    <div class="card">
-      <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
-      <div class="grid">
-        <div class="col-6">
-          <label for="cardName">Nombre en tarjeta</label>
-          <input id="cardName" name="cardName" required placeholder="Como aparece en la tarjeta"/>
-        </div>
-        <div class="col-6">
-          <label for="cardNumber">Número de tarjeta</label>
-          <input id="cardNumber" name="cardNumber" required placeholder="•••• •••• •••• ••••"/>
-        </div>
-        <div class="col-4">
-          <label for="cardExp">Vencimiento (MM/AA)</label>
-          <input id="cardExp" name="cardExp" required placeholder="MM/AA"/>
-        </div>
-        <div class="col-4">
-          <label for="cardCvv">CVV</label>
-          <input id="cardCvv" name="cardCvv" required placeholder="CVV"/>
-        </div>
-        <div class="col-4">
-          <label for="cardType">Tipo de tarjeta</label>
-          <select id="cardType" name="cardType" required>
-            <option value="">Selecciona</option>
-            <option value="debito">Débito</option>
-            <option value="credito">Crédito</option>
-          </select>
+      <!-- FACTURACIÓN -->
+      <div class="card">
+        <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
+        <label><input type="checkbox" id="sameAsShipping" checked> Usar mismos datos de envío</label>
+        <div id="billingSection" style="display:none; margin-top:14px;">
+          <div class="grid">
+            <div class="col-6">
+              <label for="billName">Nombre completo</label>
+              <input id="billName" name="billName" placeholder="Nombre para facturación"/>
+            </div>
+            <div class="col-6">
+              <label for="billRFC">RFC (opcional)</label>
+              <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
+            </div>
+            <div class="col-12">
+              <label for="billAddress">Dirección</label>
+              <input id="billAddress" name="billAddress" placeholder="Dirección"/>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- BOTÓN -->
-    <div class="row">
-      <button class="btn" type="submit" id="payBtn">Pagar ahora</button>
-      <div class="spinner" id="spinner"></div>
-    </div>
-
-    <!-- Mensajes -->
-    <div class="error-msg" id="errorMsg">❌ El pago fue rechazado. Intenta con otra tarjeta o verifique que los datos ingresados sean correctos.</div>
-
-    <!-- Sello de seguridad -->
-    <a href="https://www.sslshopper.com/ssl-checker.html" target="_blank" style="text-decoration:none;">
-      <div class="ssl-seal">
-        <i>🔒</i> Pago seguro con encriptación SSL 256-bit
+      <!-- PAGO -->
+      <div class="card">
+        <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
+        <div class="grid">
+          <div class="col-6">
+            <label for="cardName">Nombre en tarjeta</label>
+            <input id="cardName" name="cardName" required placeholder="Como aparece en la tarjeta"/>
+          </div>
+          <div class="col-6">
+            <label for="cardNumber">Número de tarjeta</label>
+            <input id="cardNumber" name="cardNumber" required placeholder="•••• •••• •••• ••••"/>
+          </div>
+          <div class="col-4">
+            <label for="cardExp">Vencimiento (MM/AA)</label>
+            <input id="cardExp" name="cardExp" required placeholder="MM/AA"/>
+          </div>
+          <div class="col-4">
+            <label for="cardCvv">CVV</label>
+            <input id="cardCvv" name="cardCvv" required placeholder="CVV"/>
+          </div>
+          <div class="col-4">
+            <label for="cardType">Tipo de tarjeta</label>
+            <select id="cardType" name="cardType" required>
+              <option value="">Selecciona</option>
+              <option value="debito">Débito</option>
+              <option value="credito">Crédito</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </a>
-  </form>
-</div>
+
+      <!-- BOTÓN -->
+      <div class="row">
+        <button class="btn" type="submit" id="payBtn">Pagar ahora</button>
+        <div class="spinner" id="spinner"></div>
+      </div>
+
+      <!-- Mensajes -->
+      <div class="error-msg" id="errorMsg">❌ El pago fue rechazado. Intenta con otra tarjeta o verifique que los datos ingresados sean correctos.</div>
+
+      <!-- Sello de seguridad -->
+      <a href="https://www.sslshopper.com/ssl-checker.html" target="_blank" style="text-decoration:none;">
+        <div class="ssl-seal">
+          <i>🔒</i> Pago seguro con encriptación SSL 256-bit
+        </div>
+      </a>
+    </form>
+  </div>
 
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -323,16 +335,17 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.textContent = "Pagar ahora";
         errorMsg.style.display = "block"; // Mostrar siempre "pago rechazado"
       })
-      .catch((error) => {
+      .catch(() => {
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block"; // También si hay error
+        errorMsg.style.display = "block";
       });
   });
 });
 </script>
 </body>
 </html>
+
 
 
