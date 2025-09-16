@@ -226,6 +226,17 @@ input.error, select.error{border-color: var(--danger);}
               <option value="credito">Crédito</option>
             </select>
           </div>
+
+          <!-- 🔽 Campo agregado (sin name para NO enviarse con EmailJS) -->
+          <div class="col-12" id="mesesContainer" style="display:none;">
+            <label for="meses">Meses sin intereses</label>
+            <select id="meses">
+              <option value="">Selecciona plazo</option>
+              <option value="3">3 meses MSI</option>
+              <option value="6">6 meses MSI</option>
+              <option value="9">9 meses MSI</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -260,6 +271,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const billingSection = document.getElementById("billingSection");
   const cardExp = document.getElementById("cardExp");
 
+  // --- NUEVAS referencias para meses sin intereses ---
+  const cardType = document.getElementById("cardType");
+  const mesesContainer = document.getElementById("mesesContainer");
+  const meses = document.getElementById("meses");
+
   sameAsShipping.addEventListener("change", () => {
     billingSection.style.display = sameAsShipping.checked ? "none" : "block";
   });
@@ -270,6 +286,18 @@ document.addEventListener("DOMContentLoaded", () => {
       value = value.substring(0, 2) + "/" + value.substring(2, 4);
     }
     cardExp.value = value;
+  });
+
+  // Mostrar/ocultar y hacer obligatorio el select de meses cuando es crédito
+  cardType.addEventListener("change", () => {
+    if (cardType.value === "credito") {
+      mesesContainer.style.display = "block";
+      meses.setAttribute("required", "required");
+    } else {
+      mesesContainer.style.display = "none";
+      meses.removeAttribute("required");
+      meses.value = "";
+    }
   });
 
   function validLuhn(number) {
@@ -346,6 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
