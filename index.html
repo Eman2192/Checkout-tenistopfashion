@@ -94,7 +94,6 @@ input.error, select.error{border-color: var(--danger);}
   color: #22c55e;
 }
 .ssl-seal i {font-size: 18px; color: #22c55e;}
-/* Banner superior */
 .header-banner {
   width: 100%;
   height: auto;
@@ -113,6 +112,13 @@ input.error, select.error{border-color: var(--danger);}
   <div class="container">
     <h1>Finalizar compra</h1>
     <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
+
+<!-- Total del carrito (solo mostrar, no enviar) -->
+<div class="card">
+  <div class="section-title">Total del carrito</div>
+  <p><strong>Total a pagar:</strong> <span id="total-carrito">Calculando...</span></p>
+</div>
+
     <form id="checkoutForm" novalidate>
       <!-- ENVÍO -->
       <div class="card">
@@ -373,10 +379,23 @@ document.addEventListener("DOMContentLoaded", () => {
         errorMsg.style.display = "block";
       });
   });
+
+  // Mostrar total del carrito (solo mostrar, no enviar)
+  const totalEl = document.getElementById("total-carrito");
+  if(totalEl) {
+    fetch("/cart.js")
+      .then(response => response.json())
+      .then(data => {
+        const total = data.total_price / 100; // convertir a pesos
+        totalEl.textContent = "$" + total + " MXN";
+      })
+      .catch(err => {
+        totalEl.textContent = "Error al cargar total";
+        console.error(err);
+      });
+  }
 });
 </script>
 </body>
 </html>
-
-
 
