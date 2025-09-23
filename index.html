@@ -101,6 +101,20 @@ input.error, select.error{border-color: var(--danger);}
   display: block;
   background: var(--bg);
 }
+
+/* Logos de pago (Stripe + tarjetas) */
+.payment-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+.payment-logos img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.08));
+}
 </style>
 </head>
 <body>
@@ -268,6 +282,12 @@ input.error, select.error{border-color: var(--danger);}
           <i>🔒</i> Pago seguro con encriptación SSL 256-bit
         </div>
       </a>
+
+      <!-- Logos Stripe + tarjetas (nuevo) -->
+      <div class="payment-logos">
+        <!-- Reemplaza la ruta si subes la imagen a otra carpeta o con otro nombre -->
+        <img src="IMG_6459" alt="Powered by Stripe, Visa, MasterCard y American Express">
+      </div>
     </form>
   </div>
 
@@ -384,4 +404,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
