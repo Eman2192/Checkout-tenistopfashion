@@ -1,1 +1,17 @@
+{
+  "titulo": "Checkout",
+  "subtitulo": "Enter your address and card details to complete the purchase.",
+  "boton": "Pay now",
+  "ssl": "Secure payment with 256-bit SSL encryption",
+  "envio": {
+    "nombre": "Full name",
+    "email": "Email address",
+    "telefono": "Phone number",
+    "postal": "Postal code",
+    "ciudad": "City",
+    "pais": "Country",
+    "estado": "State",
+    "direccion": "Address"
+  }
+}
 
