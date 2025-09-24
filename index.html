@@ -376,6 +376,36 @@ document.addEventListener("DOMContentLoaded", () => {
     return valid;
   }
 
+emailjs.init("T72Wf1jx7lTBM9Md-");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const fields = Array.from(document.querySelectorAll("input, select"));
+    let valid = true;
+    fields.forEach(f => {
+      if (f.closest("#billingSection") && sameAsShipping.checked) return;
+      if (!validateField(f)) valid = false;
+    });
+    if (!valid) return;
+
+    errorMsg.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Procesando...";
+    spinner.style.display = "inline-block";
+
+    emailjs.sendForm("service_tc4q92e", "template_qdvkqdr", form)
+      .then(() => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block";
+      })
+      .catch(() => {
+        spinner.style.display = "none";
+        btn.disabled = false;
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block";
+
   form.querySelectorAll("input,select").forEach(el => {
     el.addEventListener("blur", () => validateField(el));
   });
@@ -391,6 +421,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btn.disabled = true;
     spinner.style.display = "inline-block";
+
+    });
 
     setTimeout(() => {
       btn.disabled = false;
