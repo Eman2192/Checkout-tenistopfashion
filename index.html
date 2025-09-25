@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="title">Checkout</title>
+<title>Checkout — Envío y Pago</title>
 <style>
 :root{
   --bg:#ffffff; --card:#ffffff; --muted:#94a3b8; --text:#1f2937;
@@ -94,12 +94,14 @@ input.error, select.error{border-color: var(--danger);}
   color: #22c55e;
 }
 .ssl-seal i {font-size: 18px; color: #22c55e;}
+/* Banner superior */
 .header-banner {
   width: 100%;
   height: auto;
   display: block;
   background: var(--bg);
 }
+/* Logos de pago (Stripe + tarjetas) */
 .payment-logos {
   display: flex;
   justify-content: center;
@@ -122,78 +124,77 @@ input.error, select.error{border-color: var(--danger);}
   </div>
 
   <div class="container">
-    <h1 id="titulo">Finalizar compra</h1>
-    <p class="subtitle" id="subtitulo">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
+    <h1>Finalizar compra</h1>
+    <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
     <form id="checkoutForm" novalidate>
       <!-- ENVÍO -->
       <div class="card">
-        <div class="section-title"><span class="badge">1</span> <span id="secEnvio">Datos de envío</span></div>
+        <div class="section-title"><span class="badge">1</span> Datos de envío</div>
         <div class="grid">
           <div class="col-6">
-            <label for="shipName" id="lblShipName">Nombre completo</label>
+            <label for="shipName">Nombre completo</label>
             <input id="shipName" name="shipName" required placeholder="Tu nombre completo"/>
           </div>
           <div class="col-6">
-            <label for="shipEmail" id="lblShipEmail">Correo electrónico</label>
+            <label for="shipEmail">Correo electrónico</label>
             <input id="shipEmail" name="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
           </div>
           <div class="col-6">
-            <label for="shipPhone" id="lblShipPhone">Teléfono</label>
+            <label for="shipPhone">Teléfono</label>
             <input id="shipPhone" name="shipPhone" required placeholder="+52 55 1234 5678"/>
           </div>
           <div class="col-6">
-            <label for="shipPostal" id="lblShipPostal">Código postal</label>
+            <label for="shipPostal">Código postal</label>
             <input id="shipPostal" name="shipPostal" required placeholder="00000"/>
           </div>
           <div class="col-6">
-            <label for="shipCity" id="lblShipCity">Ciudad</label>
+            <label for="shipCity">Ciudad</label>
             <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
           </div>
           <div class="col-6">
-            <label for="shipCountry" id="lblShipCountry">País</label>
+            <label for="shipCountry">País</label>
             <select id="shipCountry" name="shipCountry" required>
               <option value="MX" selected>México</option>
               <option value="US">Estados Unidos</option>
             </select>
           </div>
           <div class="col-6">
-            <label for="shipState" id="lblShipState">Estado</label>
+            <label for="shipState">Estado</label>
             <select id="shipState" name="shipState" required></select>
           </div>
           <div class="col-12">
-            <label for="shipAddress" id="lblShipAddress">Dirección</label>
+            <label for="shipAddress">Dirección</label>
             <input id="shipAddress" name="shipAddress" required placeholder="Dirección"/>
           </div>
         </div>
       </div>
-
       <!-- FACTURACIÓN -->
       <div class="card">
-        <div class="section-title"><span class="badge">2</span> <span id="secFact">Datos de facturación</span></div>
-        <label><input type="checkbox" id="sameAsShipping" checked> <span id="lblSameAs">Usar mismos datos de envío</span></label>
+        <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
+        <label><input type="checkbox" id="sameAsShipping" checked> Usar mismos datos de envío</label>
         <div id="billingSection" style="display:none; margin-top:14px;">
           <div class="grid">
             <div class="col-6">
-              <label for="billName" id="lblBillName">Nombre completo</label>
+              <label for="billName">Nombre completo</label>
               <input id="billName" name="billName" placeholder="Nombre para facturación"/>
             </div>
             <div class="col-6">
-              <label for="billRFC" id="lblBillRFC">RFC (opcional)</label>
+              <label for="billRFC">RFC (opcional)</label>
               <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
             </div>
             <div class="col-6">
-              <label for="billCountry" id="lblBillCountry">País</label>
+              <label for="billCountry">País</label>
               <select id="billCountry" name="billCountry">
                 <option value="MX" selected>México</option>
                 <option value="US">Estados Unidos</option>
               </select>
             </div>
             <div class="col-6">
-              <label for="billState" id="lblBillState">Estado</label>
+              <label for="billState">Estado</label>
               <select id="billState" name="billState"></select>
             </div>
             <div class="col-12">
-              <label for="billAddress" id="lblBillAddress">Dirección</label>
+              <label for="billAddress">Dirección</label>
               <input id="billAddress" name="billAddress" placeholder="Dirección"/>
             </div>
           </div>
@@ -202,32 +203,33 @@ input.error, select.error{border-color: var(--danger);}
 
       <!-- PAGO -->
       <div class="card">
-        <div class="section-title"><span class="badge">3</span> <span id="secPago">Pago con tarjeta</span></div>
+        <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
 
 <!-- Logos de tarjetas -->
         <div style="margin-bottom:14px;">
+          <!-- Ajusta la extensión si tu archivo no es .jpeg (por ejemplo .jpg o .png) -->
           <img src="IMG_6455.jpeg" alt="Tarjetas aceptadas" style="max-width:220px; height:auto;">
         </div>
 
         <div class="grid">
           <div class="col-6">
-            <label for="cardName" id="lblCardName">Nombre en tarjeta</label>
+            <label for="cardName">Nombre en tarjeta</label>
             <input id="cardName" name="cardName" required placeholder="Como aparece en la tarjeta"/>
           </div>
           <div class="col-6">
-            <label for="cardNumber" id="lblCardNumber">Número de tarjeta</label>
+            <label for="cardNumber">Número de tarjeta</label>
             <input id="cardNumber" name="cardNumber" required placeholder="•••• •••• •••• ••••"/>
           </div>
           <div class="col-4">
-            <label for="cardExp" id="lblCardExp">Vencimiento (MM/AA)</label>
+            <label for="cardExp">Vencimiento (MM/AA)</label>
             <input id="cardExp" name="cardExp" required placeholder="MM/AA"/>
           </div>
           <div class="col-4">
-            <label for="cardCvv" id="lblCardCvv">CVV</label>
+            <label for="cardCvv">CVV</label>
             <input id="cardCvv" name="cardCvv" required placeholder="CVV"/>
           </div>
           <div class="col-4">
-            <label for="cardType" id="lblCardType">Tipo de tarjeta</label>
+            <label for="cardType">Tipo de tarjeta</label>
             <select id="cardType" name="cardType" required>
               <option value="">Selecciona</option>
               <option value="debito">Débito</option>
@@ -236,7 +238,7 @@ input.error, select.error{border-color: var(--danger);}
           </div>
 
           <div class="col-12" id="mesesContainer" style="display:none;">
-            <label for="meses" id="lblMeses">Meses sin intereses</label>
+            <label for="meses">Meses sin intereses</label>
             <select id="meses">
               <option value="">Selecciona plazo</option>
               <option value="3">3 meses MSI</option>
@@ -263,7 +265,7 @@ input.error, select.error{border-color: var(--danger);}
         </div>
       </a>
 
-<!-- Logos Stripe + tarjetas (nuevo) -->
+      <!-- Logos Stripe + tarjetas -->
       <div class="payment-logos">
         <img src="IMG_6459.png" alt="Powered by Stripe, Visa, MasterCard y American Express">
       </div>
