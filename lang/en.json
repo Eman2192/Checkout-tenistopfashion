@@ -1,0 +1,49 @@
+{
+  "titulo": "Checkout",
+  "subtitulo": "Enter your address and card details to complete the purchase.",
+  "boton": "Pay now",
+  "ssl": "Secure payment with 256-bit SSL encryption",
+  "error": "❌ Payment was declined. Please try another card or check the information entered.",
+  "secciones": {
+    "envio": "Shipping Information",
+    "facturacion": "Billing Information",
+    "pago": "Card Payment"
+  },
+  "envio": {
+    "nombre": "Full name",
+    "email": "Email",
+    "telefono": "Phone",
+    "postal": "ZIP code",
+    "ciudad": "City",
+    "pais": "Country",
+    "estado": "State",
+    "direccion": "Address"
+  },
+  "facturacion": {
+    "nombre": "Full name",
+    "rfc": "Tax ID (optional)",
+    "pais": "Country",
+    "estado": "State",
+    "direccion": "Address",
+    "mismos_datos": "Use same shipping details"
+  },
+  "pago": {
+    "nombre": "Name on card",
+    "numero": "Card number",
+    "vencimiento": "Expiration (MM/YY)",
+    "cvv": "CVV",
+    "tipo": "Card type",
+    "meses": "Installments",
+    "opciones": {
+      "selecciona": "Select",
+      "debito": "Debit",
+      "credito": "Credit"
+    },
+    "opciones_msi": {
+      "selecciona": "Select term",
+      "tres": "3 months",
+      "seis": "6 months",
+      "nueve": "9 months"
+    }
+  }
+}
