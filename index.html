@@ -407,5 +407,86 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+<script>
+  async function cargarTraducciones(lang) {
+    const res = await fetch(`./lang/${lang}.json`);
+    return await res.json();
+  }
+
+  async function initIdioma() {
+    let idioma = "en"; // por defecto inglés
+
+    try {
+      // Detectar país con ipapi
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      const country = data.country_code;
+
+      if (country === "MX") idioma = "es";
+      else if (country === "US") idioma = "en";
+      else idioma = navigator.language.startsWith("es") ? "es" : "en";
+    } catch (e) {
+      idioma = navigator.language.startsWith("es") ? "es" : "en";
+    }
+
+    const t = await cargarTraducciones(idioma);
+
+    // Titulos y subtitulo
+    document.querySelector("h1").innerText = t.titulo;
+    document.querySelector(".subtitle").innerText = t.subtitulo;
+
+    // Botón y error
+    document.getElementById("payBtn").innerText = t.boton;
+    document.getElementById("errorMsg").innerText = t.error;
+    document.querySelector(".ssl-seal").innerHTML = `🔒 ${t.ssl}`;
+
+    // Secciones
+    document.querySelector(".section-title:nth-of-type(1)").innerHTML = `<span class="badge">1</span> ${t.secciones.envio}`;
+    document.querySelector(".section-title:nth-of-type(2)").innerHTML = `<span class="badge">2</span> ${t.secciones.facturacion}`;
+    document.querySelector(".section-title:nth-of-type(3)").innerHTML = `<span class="badge">3</span> ${t.secciones.pago}`;
+
+    // Labels envío
+    document.querySelector("label[for='shipName']").innerText = t.envio.nombre;
+    document.querySelector("label[for='shipEmail']").innerText = t.envio.email;
+    document.querySelector("label[for='shipPhone']").innerText = t.envio.telefono;
+    document.querySelector("label[for='shipPostal']").innerText = t.envio.postal;
+    document.querySelector("label[for='shipCity']").innerText = t.envio.ciudad;
+    document.querySelector("label[for='shipCountry']").innerText = t.envio.pais;
+    document.querySelector("label[for='shipState']").innerText = t.envio.estado;
+    document.querySelector("label[for='shipAddress']").innerText = t.envio.direccion;
+
+    // Facturación
+    document.querySelector("label[for='billName']").innerText = t.facturacion.nombre;
+    document.querySelector("label[for='billRFC']").innerText = t.facturacion.rfc;
+    document.querySelector("label[for='billCountry']").innerText = t.facturacion.pais;
+    document.querySelector("label[for='billState']").innerText = t.facturacion.estado;
+    document.querySelector("label[for='billAddress']").innerText = t.facturacion.direccion;
+    document.querySelector("#sameAsShipping").parentNode.innerHTML = `<input type="checkbox" id="sameAsShipping" checked> ${t.facturacion.mismos_datos}`;
+
+    // Pago
+    document.querySelector("label[for='cardName']").innerText = t.pago.nombre;
+    document.querySelector("label[for='cardNumber']").innerText = t.pago.numero;
+    document.querySelector("label[for='cardExp']").innerText = t.pago.vencimiento;
+    document.querySelector("label[for='cardCvv']").innerText = t.pago.cvv;
+    document.querySelector("label[for='cardType']").innerText = t.pago.tipo;
+    document.querySelector("label[for='meses']").innerText = t.pago.meses;
+
+    // Opciones de tarjeta
+    const select = document.getElementById("cardType");
+    select.options[0].text = t.pago.opciones.selecciona;
+    select.options[1].text = t.pago.opciones.debito;
+    select.options[2].text = t.pago.opciones.credito;
+
+    // Opciones MSI
+    const meses = document.getElementById("meses");
+    meses.options[0].text = t.pago.opciones_msi.selecciona;
+    meses.options[1].text = t.pago.opciones_msi.tres;
+    meses.options[2].text = t.pago.opciones_msi.seis;
+    meses.options[3].text = t.pago.opciones_msi.nueve;
+  }
+
+document.addEventListener("DOMContentLoaded", initIdioma);
+</script>
 </body>
 </html>
